@@ -1,7 +1,7 @@
 $(document).ready(function () {
   const params = new URLSearchParams(window.location.search);
   var token = params.get("token");
-  const room = null;
+
   const JSThis = this;
 
   const btnMute = $("#mute");
@@ -10,8 +10,13 @@ $(document).ready(function () {
   const btnUnMedia = $("#unmedia");
   const btnHangUp = $("#hangup");
 
+  const avatarNone = $("#avatar-none");
+
   const screenAudio = $(".container-voice");
   const screenVideo = $(".container-video");
+
+  var localVideo1 = $("#local-video");
+  var remoteVideo1 = $("#remote-video");
 
   // var token =
   //   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImN0eSI6InR3aWxpby1mcGE7dj0xIn0.eyJpc3MiOiJTS2VhYjY5OGRlOTIyMmU4NDJmYTVlNjA2N2MyYzFjYTdjIiwiZXhwIjoxNjM0ODM2OTc2LCJqdGkiOiJTS2VhYjY5OGRlOTIyMmU4NDJmYTVlNjA2N2MyYzFjYTdjLTE2MzQ4MzMzNzYiLCJzdWIiOiJBQzVhZTJkMDhlNmY1ZTkyMjJjNzNlODE3OWIxNThhNGNhIiwiZ3JhbnRzIjp7ImlkZW50aXR5IjoiUm9vbTEiLCJ2aWRlbyI6eyJyb29tIjoiR2nhuqNuIEjhuqNpIE5hbSJ9fX0.7ae7hBk1U27Wrj1Hjk79VEF2p5IWP0O5SV-X5JrhxVY";
@@ -20,10 +25,10 @@ $(document).ready(function () {
 
   var connectOptions = {
     audio: true,
-    video: { frameRate: 25, height: 450 },
+    video: { frameRate: 30 },
   };
 
-  Video.connect(token, connectOptions).then(
+  Twilio.Video.connect(token, connectOptions).then(
     (room) => {
       //#region handle microphone
       btnMute.click(function () {
@@ -42,15 +47,16 @@ $(document).ready(function () {
         });
       });
       //#endregion
+      console.log(room);
+      remoteVideo1.hide();
 
       //#region handle media
       btnMedia.click(function () {
         btnMedia.hide();
         btnUnMedia.show();
-        // screenAudio.show();
-        // screenVideo.hide();
-        console.log(room);
+        localVideo1.hide();
         room.localParticipant.videoTracks.forEach((publication) => {
+          console.log("publication", publication.track);
           publication.track.disable();
         });
       });
@@ -58,37 +64,31 @@ $(document).ready(function () {
       btnUnMedia.click(function () {
         btnMedia.show();
         btnUnMedia.hide();
-        // screenAudio.hide();
-        // screenVideo.show();
+        localVideo1.show();
         room.localParticipant.videoTracks.forEach((publication) => {
+          console.log("publication", publication.track);
           publication.track.enable();
         });
       });
       //#endregion
 
-      function handleTrackDisabled(track) {
-        track.on("disabled", () => {
-          if (track.kind === "video") {
-            remoteVideo.innerHTML = "";
-            //remoteVideo.appendChild(img);
-          }
+      function handleTrackEnabled(track) {
+        track.on("enabled", () => {
+          remoteVideo1.show();
         });
       }
 
-      function handleTrackEnabled(track) {
-        track.on("enabled", () => {
-          if (track.kind === "video") {
-            remoteVideo.innerHTML = "";
-            remoteVideo.appendChild(track.attach());
-          }
+      function handleTrackDisabled(track) {
+        track.on("disabled", () => {
+          remoteVideo1.hide();
         });
       }
 
       // Log any Participants already connected to the Room
       room.participants.forEach((participant) => {
         console.log(`Participant "${participant.identity}"`);
-        // screenAudio.hide();
-        // screenVideo.show();
+        screenAudio.hide();
+        screenVideo.show();
         participant.tracks.forEach((publication) => {
           if (publication.track) {
             remoteVideo.appendChild(publication.track.attach());
@@ -102,25 +102,24 @@ $(document).ready(function () {
         });
         participant.on("trackSubscribed", (track) => {
           remoteVideo.appendChild(track.attach());
-          console.log("remote audio added");
         });
       });
-
       // Log new Participants as they connect to the Room
       room.on("participantConnected", (participant) => {
-        console.log(`A remote Participant connected: ${participant}`);
-        // screenAudio.hide();
-        // screenVideo.show();
+        console.log(`A remote Participant connected: ${participant.identity}`);
+        screenAudio.hide();
+        screenVideo.show();
+        remoteVideo1.hide();
         participant.tracks.forEach((publication) => {
           if (publication.isSubscribed) {
             const track = publication.track;
             remoteVideo.appendChild(track.attach());
+            handleTrackEnabled(publication.track);
           }
+          publication.on("subscribed", handleTrackEnabled);
         });
         participant.on("trackSubscribed", (track) => {
-          console.log("pub track:", track);
           remoteVideo.appendChild(track.attach());
-          console.log("remote audio added");
         });
       });
 
@@ -141,6 +140,7 @@ $(document).ready(function () {
         // Detach the local media elements
         room.localParticipant.tracks.forEach((publication) => {
           const attachedElements = publication.track.detach();
+          console.log("attachedElements", attachedElements);
           attachedElements.forEach((element) => element.remove());
         });
         room.disconnect();
@@ -151,6 +151,13 @@ $(document).ready(function () {
     }
   );
 
+  Twilio.Video.createLocalTracks().then((localTracks) => {
+    localTracks.forEach((track) => {
+      localVideo.appendChild(track.attach());
+    });
+    localVideo1.hide();
+  });
+
   // Video.createLocalTracks({ audio: true, video: false }).then(function (
   //   localTracks
   // ) {
@@ -160,11 +167,11 @@ $(document).ready(function () {
   //   });
   // });
 
-  if (!JSThis.localVideo) {
-    Video.createLocalTracks().then((localTracks) => {
-      localTracks.forEach((track) => {
-        localVideo.appendChild(track.attach());
-      });
-    });
-  }
+  // if (!JSThis.localVideo) {
+  //   Twilio.Video.createLocalTracks().then((localTracks) => {
+  //     localTracks.forEach((track) => {
+  //       localVideo.appendChild(track.attach());
+  //     });
+  //   });
+  // }
 });

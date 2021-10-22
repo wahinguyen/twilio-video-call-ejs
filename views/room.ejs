@@ -12,7 +12,7 @@
   </head>
   <body>
     <div class="container">
-      <div class="container-voice  hidden-first">
+      <div class="container-voice">
         <div class="avatar-calling">
           <img class="avatar" src="assets/avatar.png" alt="Avatar">
         </div>
@@ -20,10 +20,10 @@
           <h4>Đang gọi ...</h4>
         </div>
       </div>
-      <div class="container-video">
+      <div class="container-video hidden-first">
         <div class="remote-video">
         <div id="remote-video"></div>
-        <!-- <img src="assets/avatar.png" alt="Avatar" width="100%" height="90%"> -->
+        <img id="avatar-none" class="hidden-first" src="assets/avatar.png" alt="Avatar" width="100%" height="90%">
       </div>
       <div class="local-video">
         <div id="local-video"></div>
@@ -33,8 +33,8 @@
         <button type="button" id="mute"><span style="font-size: 30px;" class="iconify" data-icon="mdi:microphone"></span></button>
         <button type="button" id="unmute" class="hidden-first"><span style="font-size: 30px;" class="iconify" data-icon="mdi:microphone-off"></span></button>
         <button type="button" id="hangup"><span style="font-size: 40px;" class="iconify" data-icon="mdi:phone-hangup"></span></button>
-        <button type="button" id="media" ><span style="font-size: 30px;" class="iconify" data-icon="bx:bxs-video"></span></button>
-        <button type="button" id="unmedia" class="hidden-first"><span style="font-size: 30px;" class="iconify" data-icon="bx:bxs-video-off"></span></button>
+        <button type="button" id="unmedia" ><span style="font-size: 30px;" class="iconify" data-icon="bx:bxs-video-off"></span></button>
+        <button type="button" id="media" class="hidden-first" ><span style="font-size: 30px;" class="iconify" data-icon="bx:bxs-video"></span></button>
       </div>
     </div>
   </body>
