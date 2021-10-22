@@ -61,16 +61,9 @@ $(document).ready(function () {
         btnUnMedia.hide();
         // screenAudio.hide();
         // screenVideo.show();
-        Video.createLocalTracks().then((localTracks) => {
-          localTracks.forEach((track) => {
-            if (track.kind == "video") {
-              localVideo.appendChild(track.attach());
-            }
-          });
+        room.localParticipant.videoTracks.forEach((publication) => {
+          publication.track.enable();
         });
-        // room.localParticipant.videoTracks.forEach((publication) => {
-        //   publication.track.enable();
-        // });
       });
       //#endregion
 
