@@ -13,8 +13,12 @@ app.use(express.json());
 
 app.use(express.static("./public"));
 
+// app.get("/", (req, res) => {
+//   res.render("room");
+// });
+
 app.get("/", (req, res) => {
-  res.render("room");
+  res.sendFile(__dirname + "/views/room.html");
 });
 
 app.listen(port, () => {
