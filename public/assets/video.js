@@ -109,7 +109,7 @@ $(document).ready(function () {
           publication.on("subscribed", handleTrackEnabled);
         });
         participant.on("trackSubscribed", (track) => {
-          if (track.kind == "audio") {
+          if (track.kind === "audio") {
             remoteVideo.appendChild(track.attach());
             console.log("remote audio added");
           }
@@ -129,7 +129,7 @@ $(document).ready(function () {
         });
         participant.on("trackSubscribed", (track) => {
           console.log("pub track:", track);
-          if (track.kind == "audio") {
+          if (track.kind === "audio") {
             remoteVideo.appendChild(track.attach());
             console.log("remote audio added");
           }
@@ -167,7 +167,7 @@ $(document).ready(function () {
     localTracks
   ) {
     localTracks.forEach((track) => {
-      audio.appendChild(track.attach());
+      localVideo.appendChild(track.attach());
       console.log("local audio added");
     });
   });
