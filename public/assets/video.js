@@ -163,20 +163,20 @@ $(document).ready(function () {
     }
   );
 
-  Video.createLocalTracks({ audio: true, video: false }).then(function (
-    localTracks
-  ) {
-    localTracks.forEach((track) => {
-      localVideo.appendChild(track.attach());
-      console.log("local audio added");
-    });
-  });
+  // Video.createLocalTracks({ audio: true, video: false }).then(function (
+  //   localTracks
+  // ) {
+  //   localTracks.forEach((track) => {
+  //     localVideo.appendChild(track.attach());
+  //     console.log("local audio added");
+  //   });
+  // });
 
   if (!JSThis.localVideo) {
-    // Video.createLocalTracks().then((localTracks) => {
-    //   localTracks.forEach((track) => {
-    //       localVideo.appendChild(track.attach());
-    //   });
-    // });
+    Video.createLocalTracks().then((localTracks) => {
+      localTracks.forEach((track) => {
+        localVideo.appendChild(track.attach());
+      });
+    });
   }
 });

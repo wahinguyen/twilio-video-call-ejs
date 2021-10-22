@@ -13,11 +13,7 @@ app.use(express.json());
 
 app.use(express.static("./public"));
 
-app.get("/2", (req, res) => {
-  res.render("room");
-});
-
-app.get("/1", (req, res) => {
+app.get("/", (req, res) => {
   res.render("room");
 });
 
