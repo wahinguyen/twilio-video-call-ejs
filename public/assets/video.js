@@ -13,18 +13,17 @@ $(document).ready(function () {
   const screenAudio = $(".container-voice");
   const screenVideo = $(".container-video");
 
-  var audio = document.getElementById("audio");
   // var token =
   //   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImN0eSI6InR3aWxpby1mcGE7dj0xIn0.eyJpc3MiOiJTS2VhYjY5OGRlOTIyMmU4NDJmYTVlNjA2N2MyYzFjYTdjIiwiZXhwIjoxNjM0ODM2OTc2LCJqdGkiOiJTS2VhYjY5OGRlOTIyMmU4NDJmYTVlNjA2N2MyYzFjYTdjLTE2MzQ4MzMzNzYiLCJzdWIiOiJBQzVhZTJkMDhlNmY1ZTkyMjJjNzNlODE3OWIxNThhNGNhIiwiZ3JhbnRzIjp7ImlkZW50aXR5IjoiUm9vbTEiLCJ2aWRlbyI6eyJyb29tIjoiR2nhuqNuIEjhuqNpIE5hbSJ9fX0.7ae7hBk1U27Wrj1Hjk79VEF2p5IWP0O5SV-X5JrhxVY";
   var localVideo = document.getElementById("local-video");
   var remoteVideo = document.getElementById("remote-video");
 
-  // var connectOptions = {
-  //   audio: true,
-  //   video: { frameRate: 25, height: 450 },
-  // };
+  var connectOptions = {
+    audio: true,
+    video: { frameRate: 25, height: 450 },
+  };
 
-  Video.connect(token).then(
+  Video.connect(token, connectOptions).then(
     (room) => {
       //#region handle microphone
       btnMute.click(function () {
