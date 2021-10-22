@@ -48,8 +48,8 @@ $(document).ready(function () {
       btnMedia.click(function () {
         btnMedia.hide();
         btnUnMedia.show();
-        screenAudio.show();
-        screenVideo.hide();
+        // screenAudio.show();
+        // screenVideo.hide();
         console.log(room);
         room.localParticipant.videoTracks.forEach((publication) => {
           publication.track.disable();
@@ -59,8 +59,8 @@ $(document).ready(function () {
       btnUnMedia.click(function () {
         btnMedia.show();
         btnUnMedia.hide();
-        screenAudio.hide();
-        screenVideo.show();
+        // screenAudio.hide();
+        // screenVideo.show();
         Video.createLocalTracks().then((localTracks) => {
           localTracks.forEach((track) => {
             if (track.kind == "video") {
@@ -95,8 +95,8 @@ $(document).ready(function () {
       // Log any Participants already connected to the Room
       room.participants.forEach((participant) => {
         console.log(`Participant "${participant.identity}"`);
-        screenAudio.hide();
-        screenVideo.show();
+        // screenAudio.hide();
+        // screenVideo.show();
         participant.tracks.forEach((publication) => {
           if (publication.track) {
             remoteVideo.appendChild(publication.track.attach());
@@ -109,18 +109,16 @@ $(document).ready(function () {
           publication.on("subscribed", handleTrackEnabled);
         });
         participant.on("trackSubscribed", (track) => {
-          if (track.kind === "audio") {
-            remoteVideo.appendChild(track.attach());
-            console.log("remote audio added");
-          }
+          remoteVideo.appendChild(track.attach());
+          console.log("remote audio added");
         });
       });
 
       // Log new Participants as they connect to the Room
       room.on("participantConnected", (participant) => {
         console.log(`A remote Participant connected: ${participant}`);
-        screenAudio.hide();
-        screenVideo.show();
+        // screenAudio.hide();
+        // screenVideo.show();
         participant.tracks.forEach((publication) => {
           if (publication.isSubscribed) {
             const track = publication.track;
@@ -129,10 +127,8 @@ $(document).ready(function () {
         });
         participant.on("trackSubscribed", (track) => {
           console.log("pub track:", track);
-          if (track.kind === "audio") {
-            remoteVideo.appendChild(track.attach());
-            console.log("remote audio added");
-          }
+          remoteVideo.appendChild(track.attach());
+          console.log("remote audio added");
         });
       });
 
