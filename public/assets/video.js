@@ -19,12 +19,12 @@ $(document).ready(function () {
   var localVideo = document.getElementById("local-video");
   var remoteVideo = document.getElementById("remote-video");
 
-  var connectOptions = {
-    audio: true,
-    video: { frameRate: 25, height: 450 },
-  };
+  // var connectOptions = {
+  //   audio: true,
+  //   video: { frameRate: 25, height: 450 },
+  // };
 
-  Video.connect(token, connectOptions).then(
+  Video.connect(token).then(
     (room) => {
       //#region handle microphone
       btnMute.click(function () {
