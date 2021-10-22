@@ -9,15 +9,19 @@ $(document).ready(function () {
   const btnMedia = $("#media");
   const btnUnMedia = $("#unmedia");
   const btnHangUp = $("#hangup");
+
+  const screenAudio = $(".container-voice");
+  const screenVideo = $(".container-video");
+
+  var audio = document.getElementById("audio");
   // var token =
   //   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImN0eSI6InR3aWxpby1mcGE7dj0xIn0.eyJpc3MiOiJTS2VhYjY5OGRlOTIyMmU4NDJmYTVlNjA2N2MyYzFjYTdjIiwiZXhwIjoxNjM0ODM2OTc2LCJqdGkiOiJTS2VhYjY5OGRlOTIyMmU4NDJmYTVlNjA2N2MyYzFjYTdjLTE2MzQ4MzMzNzYiLCJzdWIiOiJBQzVhZTJkMDhlNmY1ZTkyMjJjNzNlODE3OWIxNThhNGNhIiwiZ3JhbnRzIjp7ImlkZW50aXR5IjoiUm9vbTEiLCJ2aWRlbyI6eyJyb29tIjoiR2nhuqNuIEjhuqNpIE5hbSJ9fX0.7ae7hBk1U27Wrj1Hjk79VEF2p5IWP0O5SV-X5JrhxVY";
   var localVideo = document.getElementById("local-video");
   var remoteVideo = document.getElementById("remote-video");
 
   var connectOptions = {
-    name: "huy",
     audio: true,
-    video: { frameRate: 25, width: 300 },
+    video: { frameRate: 25, height: 450 },
   };
 
   Video.connect(token, connectOptions).then(
@@ -44,6 +48,8 @@ $(document).ready(function () {
       btnMedia.click(function () {
         btnMedia.hide();
         btnUnMedia.show();
+        screenAudio.show();
+        screenVideo.hide();
         console.log(room);
         room.localParticipant.videoTracks.forEach((publication) => {
           publication.track.disable();
@@ -53,10 +59,18 @@ $(document).ready(function () {
       btnUnMedia.click(function () {
         btnMedia.show();
         btnUnMedia.hide();
-        console.log(room);
-        room.localParticipant.videoTracks.forEach((publication) => {
-          publication.track.enable();
+        screenAudio.hide();
+        screenVideo.show();
+        Video.createLocalTracks().then((localTracks) => {
+          localTracks.forEach((track) => {
+            if (track.kind == "video") {
+              localVideo.appendChild(track.attach());
+            }
+          });
         });
+        // room.localParticipant.videoTracks.forEach((publication) => {
+        //   publication.track.enable();
+        // });
       });
       //#endregion
 
@@ -81,6 +95,8 @@ $(document).ready(function () {
       // Log any Participants already connected to the Room
       room.participants.forEach((participant) => {
         console.log(`Participant "${participant.identity}"`);
+        screenAudio.hide();
+        screenVideo.show();
         participant.tracks.forEach((publication) => {
           if (publication.track) {
             remoteVideo.appendChild(publication.track.attach());
@@ -93,13 +109,18 @@ $(document).ready(function () {
           publication.on("subscribed", handleTrackEnabled);
         });
         participant.on("trackSubscribed", (track) => {
-          remoteVideo.appendChild(track.attach());
+          if (track.kind == "audio") {
+            remoteVideo.appendChild(track.attach());
+            console.log("remote audio added");
+          }
         });
       });
 
       // Log new Participants as they connect to the Room
       room.on("participantConnected", (participant) => {
         console.log(`A remote Participant connected: ${participant}`);
+        screenAudio.hide();
+        screenVideo.show();
         participant.tracks.forEach((publication) => {
           if (publication.isSubscribed) {
             const track = publication.track;
@@ -107,7 +128,11 @@ $(document).ready(function () {
           }
         });
         participant.on("trackSubscribed", (track) => {
-          remoteVideo.appendChild(track.attach());
+          console.log("pub track:", track);
+          if (track.kind == "audio") {
+            remoteVideo.appendChild(track.attach());
+            console.log("remote audio added");
+          }
         });
       });
 
@@ -139,10 +164,16 @@ $(document).ready(function () {
   );
 
   if (!JSThis.localVideo) {
-    Video.createLocalTracks().then((localTracks) => {
+    Video.createLocalTracks({ video: false }).then(function (localTracks) {
       localTracks.forEach((track) => {
-        localVideo.appendChild(track.attach());
+        audio.appendChild(track.attach());
+        console.log("local audio added");
       });
     });
+    // Video.createLocalTracks().then((localTracks) => {
+    //   localTracks.forEach((track) => {
+    //       localVideo.appendChild(track.attach());
+    //   });
+    // });
   }
 });

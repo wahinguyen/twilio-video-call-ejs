@@ -13,19 +13,30 @@
   </head>
   <body>
     <div class="container">
-      <div class="remote-video">
+      <div id="audio"></div>
+      <div class="container-voice">
+        <div class="avatar-calling">
+          <img class="avatar" src="assets/avatar.png" alt="Avatar">
+        </div>
+        <div class="text-calling">
+          <h4>Đang gọi ...</h4>
+        </div>
+      </div>
+      <div class="container-video hidden-first">
+        <div class="remote-video">
         <div id="remote-video"></div>
         <!-- <img src="assets/avatar.png" alt="Avatar" width="100%" height="90%"> -->
       </div>
       <div class="local-video">
         <div id="local-video"></div>
       </div>
+      </div>
       <div class="group-button">
         <button type="button" id="mute"><i style="font-size: 20px;" class="fas fa-microphone"></i></button>
         <button type="button" id="unmute" class="hidden-first"><i style="font-size: 20px;" class="fas fa-microphone-slash"></i></button>
         <button type="button" id="hangup"><span style="font-size: 40px;" class="iconify" data-icon="mdi:phone-hangup"></span></button>
-        <button type="button" id="media"><i style="font-size: 20px;" class="fas fa-video"></i></button>
-        <button type="button" id="unmedia" class="hidden-first"><i style="font-size: 20px;" class="fas fa-video-slash"></i></button>
+        <button type="button" id="media" class="hidden-first"><i style="font-size: 20px;" class="fas fa-video"></i></button>
+        <button type="button" id="unmedia"><i style="font-size: 20px;" class="fas fa-video-slash"></i></button>
       </div>
     </div>
   </body>

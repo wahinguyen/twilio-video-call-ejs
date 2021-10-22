@@ -4,39 +4,48 @@ body {
 }
 
 .container {
-  padding: 2px;
+  padding: 0;
   max-width: 100%;
-  height: 100vh;
+  height: 640px;
+  position: relative;
+}
+
+.container-video {
+  padding: 0;
+  max-width: 100%;
+  height: 640px;
   position: relative;
 }
 
 .remote-video {
   height: 50%;
   width: 100%;
-  background-color: red;
+  background-color: black;
   position: relative;
+  display: flex;
+  justify-content: center;
 }
 
 #remote-video video {
-  max-width: 100%;
-  height: 333px;
-  background-color: #272726;
+  width: auto;
+  height: 100%;
+  top: 0;
   background-repeat: no-repeat;
 }
 
 .local-video {
   height: 50%;
   width: 100%;
-  background-color: blue;
+  background-color: black;
   position: relative;
   display: flex;
   justify-content: center;
 }
 
 #local-video video {
-  max-width: 100%;
-  height: 333px;
-  background-color: #272726;
+  width: auto;
+  height: 100%;
+  top: 0;
   background-repeat: no-repeat;
 }
 
@@ -48,40 +57,72 @@ body {
   position: absolute;
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: center;
   flex-direction: row;
 }
 
 #mute {
-  height: 50px;
-  width: 50px;
+  height: 55px;
+  width: 55px;
   border-radius: 50%;
 }
 
 #unmute {
-  height: 50px;
-  width: 50px;
+  height: 55px;
+  width: 55px;
   border-radius: 50%;
 }
 
 #hangup {
-  height: 60px;
-  width: 60px;
+  height: 65px;
+  width: 65px;
   border-radius: 50%;
+  margin-left: 33px;
+  margin-right: 33px;
 }
 
 #media {
-  height: 50px;
-  width: 50px;
+  height: 55px;
+  width: 55px;
   border-radius: 50%;
 }
 
 #unmedia {
-  height: 50px;
-  width: 50px;
+  height: 55px;
+  width: 55px;
   border-radius: 50%;
 }
 
 .hidden-first {
   display: none;
+}
+
+.container-voice {
+  padding: 0;
+  max-width: 100%;
+  height: 640px;
+  position: relative;
+  background-image: linear-gradient(blue, purple);
+}
+
+.avatar-calling {
+  width: auto;
+  height: 250px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar {
+  height: 140px;
+  width: 140px;
+  border-radius: 50%;
+}
+
+.text-calling {
+  width: auto;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
