@@ -2,15 +2,14 @@ $(document).ready(function () {
   const params = new URLSearchParams(window.location.search);
   var token = params.get("token");
 
-  const JSThis = this;
-
   const btnMute = $("#mute");
   const btnUnMute = $("#unmute");
   const btnMedia = $("#media");
   const btnUnMedia = $("#unmedia");
   const btnHangUp = $("#hangup");
 
-  const avatarNone = $("#avatar-none");
+  const remoteAvatar = $("#remote-avatar");
+  const localAvatar = $("#local-avatar");
 
   const screenAudio = $(".container-voice");
   const screenVideo = $(".container-video");
@@ -18,8 +17,6 @@ $(document).ready(function () {
   var localVideo1 = $("#local-video");
   var remoteVideo1 = $("#remote-video");
 
-  // var token =
-  //   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImN0eSI6InR3aWxpby1mcGE7dj0xIn0.eyJpc3MiOiJTS2VhYjY5OGRlOTIyMmU4NDJmYTVlNjA2N2MyYzFjYTdjIiwiZXhwIjoxNjM0ODM2OTc2LCJqdGkiOiJTS2VhYjY5OGRlOTIyMmU4NDJmYTVlNjA2N2MyYzFjYTdjLTE2MzQ4MzMzNzYiLCJzdWIiOiJBQzVhZTJkMDhlNmY1ZTkyMjJjNzNlODE3OWIxNThhNGNhIiwiZ3JhbnRzIjp7ImlkZW50aXR5IjoiUm9vbTEiLCJ2aWRlbyI6eyJyb29tIjoiR2nhuqNuIEjhuqNpIE5hbSJ9fX0.7ae7hBk1U27Wrj1Hjk79VEF2p5IWP0O5SV-X5JrhxVY";
   var localVideo = document.getElementById("local-video");
   var remoteVideo = document.getElementById("remote-video");
 
@@ -47,27 +44,26 @@ $(document).ready(function () {
         });
       });
       //#endregion
-      console.log(room);
-      remoteVideo1.hide();
 
       //#region handle media
       btnMedia.click(function () {
         btnMedia.hide();
         btnUnMedia.show();
-        localVideo1.hide();
         room.localParticipant.videoTracks.forEach((publication) => {
           console.log("publication", publication.track);
           publication.track.disable();
+          localVideo1.hide();
+          localAvatar.show();
         });
       });
 
       btnUnMedia.click(function () {
         btnMedia.show();
         btnUnMedia.hide();
-        localVideo1.show();
         room.localParticipant.videoTracks.forEach((publication) => {
-          console.log("publication", publication.track);
           publication.track.enable();
+          localVideo1.show();
+          localAvatar.hide();
         });
       });
       //#endregion
@@ -75,12 +71,14 @@ $(document).ready(function () {
       function handleTrackEnabled(track) {
         track.on("enabled", () => {
           remoteVideo1.show();
+          remoteAvatar.hide();
         });
       }
 
       function handleTrackDisabled(track) {
         track.on("disabled", () => {
           remoteVideo1.hide();
+          remoteAvatar.show();
         });
       }
 
@@ -103,24 +101,26 @@ $(document).ready(function () {
         participant.on("trackSubscribed", (track) => {
           remoteVideo.appendChild(track.attach());
         });
+        remoteAvatar.show();
+        remoteVideo1.hide();
       });
       // Log new Participants as they connect to the Room
       room.on("participantConnected", (participant) => {
         console.log(`A remote Participant connected: ${participant.identity}`);
         screenAudio.hide();
         screenVideo.show();
-        remoteVideo1.hide();
         participant.tracks.forEach((publication) => {
           if (publication.isSubscribed) {
-            const track = publication.track;
-            remoteVideo.appendChild(track.attach());
             handleTrackEnabled(publication.track);
+            console.log("publication.track", publication.track);
           }
           publication.on("subscribed", handleTrackEnabled);
         });
         participant.on("trackSubscribed", (track) => {
           remoteVideo.appendChild(track.attach());
         });
+        remoteVideo1.hide();
+        remoteAvatar.show();
       });
 
       room.on("participantDisconnected", (participant) => {
@@ -156,6 +156,7 @@ $(document).ready(function () {
       localVideo.appendChild(track.attach());
     });
     localVideo1.hide();
+    localAvatar.show();
   });
 
   // Video.createLocalTracks({ audio: true, video: false }).then(function (

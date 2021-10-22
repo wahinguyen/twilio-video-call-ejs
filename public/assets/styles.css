@@ -1,13 +1,13 @@
 html,
 body {
   width: 100%;
-  height: 100vh;
+  height: 100%;
   margin: 0;
   padding: 0;
   overflow: hidden;
 }
 
-.container {
+.container-main {
   padding: 0;
   max-width: 100%;
   height: 640px;
@@ -17,7 +17,7 @@ body {
 .container-video {
   padding: 0;
   max-width: 100%;
-  height: 640px;
+  height: 100vh;
   position: relative;
 }
 
@@ -102,11 +102,10 @@ body {
 }
 
 .container-voice {
-  padding: 0;
-  max-width: 100%;
-  height: 640px;
+  width: 100%;
+  height: 100vh;
   position: relative;
-  background-image: linear-gradient(blue, purple);
+  background-image: linear-gradient(#e66465, #9198e5);
 }
 
 .avatar-calling {
@@ -129,4 +128,8 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+img {
+  opacity: 2;
 }
