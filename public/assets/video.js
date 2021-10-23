@@ -50,7 +50,6 @@ $(document).ready(function () {
         btnMedia.hide();
         btnUnMedia.show();
         room.localParticipant.videoTracks.forEach((publication) => {
-          console.log("publication", publication.track);
           publication.track.disable();
           localVideo1.hide();
           localAvatar.show();
@@ -70,15 +69,19 @@ $(document).ready(function () {
 
       function handleTrackEnabled(track) {
         track.on("enabled", () => {
-          remoteVideo1.show();
-          remoteAvatar.hide();
+          if (track.kind == "video") {
+            remoteVideo1.show();
+            remoteAvatar.hide();
+          }
         });
       }
 
       function handleTrackDisabled(track) {
         track.on("disabled", () => {
-          remoteVideo1.hide();
-          remoteAvatar.show();
+          if (track.kind == "video") {
+            remoteVideo1.hide();
+            remoteAvatar.show();
+          }
         });
       }
 
