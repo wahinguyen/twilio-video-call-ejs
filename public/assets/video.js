@@ -27,6 +27,8 @@ $(document).ready(function () {
 
   Twilio.Video.connect(token, connectOptions).then(
     (room) => {
+      console.log(`Room connected: "${room}"`);
+
       //#region handle microphone
       btnMute.click(function () {
         btnMute.hide();
@@ -136,6 +138,8 @@ $(document).ready(function () {
           const attachedElements = publication.track.detach();
           attachedElements.forEach((element) => element.remove());
         });
+        room.disconnect();
+        alert("Room closed");
       });
 
       // To disconnect from a Room
@@ -146,7 +150,6 @@ $(document).ready(function () {
           console.log("attachedElements", attachedElements);
           attachedElements.forEach((element) => element.remove());
         });
-        room.disconnect();
       });
     },
     (error) => {
@@ -161,21 +164,4 @@ $(document).ready(function () {
     localVideo1.hide();
     localAvatar.show();
   });
-
-  // Video.createLocalTracks({ audio: true, video: false }).then(function (
-  //   localTracks
-  // ) {
-  //   localTracks.forEach((track) => {
-  //     localVideo.appendChild(track.attach());
-  //     console.log("local audio added");
-  //   });
-  // });
-
-  // if (!JSThis.localVideo) {
-  //   Twilio.Video.createLocalTracks().then((localTracks) => {
-  //     localTracks.forEach((track) => {
-  //       localVideo.appendChild(track.attach());
-  //     });
-  //   });
-  // }
 });
