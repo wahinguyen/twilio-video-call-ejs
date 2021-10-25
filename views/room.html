@@ -44,12 +44,8 @@
     <script src="//sdk.twilio.com/js/video/releases/2.15.3/twilio-video.min.js"></script>
     <script>
       const Video = Twilio.Video;
-      console.log(Video.createLocalTracks().then(lc => console.log(lc)));
-
-    //  const localVideoTracks;
-      
       Video.createLocalTracks().then((localTracks) => {
-        const localVideoTracks = localTracks;
+        localVideoTracks = localTracks;
         var localVideoTrack = localTracks.find((track) => track.kind === "video");
         const container = document.getElementById("local-video");
         container.appendChild(localVideoTrack.attach());

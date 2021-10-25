@@ -43,16 +43,15 @@ $(document).ready(function () {
   //   container.appendChild(localVideoTrack.attach());
   //   return;
   // });
-
+  console.log(document.getElementById("local-video"));
   var connectOptions = {
     preferredVideoCodecs: ["VP8"],
     name: "video call",
-    video: true,
-    audio: true,
+    //tracks: [],
     //tracks: localVideoTracks,
     // preferredAudioCodecs: ["OPUS"],
-    // audio: { name: "microphone" },
-    // video: { name: "camera" },
+    audio: { name: "audio" },
+    video: { name: "video" },
     // networkQuality: {
     //   local: 1, // LocalParticipant's Network Quality verbosity [1 - 3]
     //   remote: 2, // RemoteParticipants' Network Quality verbosity [0 - 3]
