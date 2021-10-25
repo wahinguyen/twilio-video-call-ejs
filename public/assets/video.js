@@ -20,14 +20,25 @@ $(document).ready(function () {
   var localVideo = document.getElementById("local-video");
   var remoteVideo = document.getElementById("remote-video");
 
-  //var localVideoTracks;
+  var localVideoTracks;
+  Video.createLocalTracks().then((localTracks) => {
+    localVideoTracks = localTracks;
+    var localVideoTrack = localTracks.find((track) => track.kind === "video");
+    const container = document.getElementById("local-video");
+    container.appendChild(localVideoTrack.attach());
+    // localTracks.forEach((track) => {
+    //   localVideo.appendChild(track.attach());
+    // });
+    // localVideo.style = "display: none";
+    // localVideo1.hide();
+    // localAvatar.show();
+  });
 
   var connectOptions = {
     name: "video call",
     // preferredVideoCodecs: ["H.264"],
     // preferredAudioCodecs: ["OPUS"],
-    audio: { name: "microphone" },
-    video: { name: "camera" },
+    tracks: localVideoTracks,
     networkQuality: {
       local: 1, // LocalParticipant's Network Quality verbosity [1 - 3]
       remote: 2, // RemoteParticipants' Network Quality verbosity [0 - 3]
@@ -170,17 +181,4 @@ $(document).ready(function () {
       console.error(`Unable to connect to Room: ${error.message}`);
     }
   );
-
-  Video.createLocalTracks().then((localTracks) => {
-    // localVideoTracks = localTracks;
-    var localVideoTrack = localTracks.find((track) => track.kind === "video");
-    const container = document.getElementById("local-video");
-    container.appendChild(localVideoTrack.attach());
-    // localTracks.forEach((track) => {
-    //   localVideo.appendChild(track.attach());
-    // });
-    // localVideo.style = "display: none";
-    // localVideo1.hide();
-    // localAvatar.show();
-  });
 });
