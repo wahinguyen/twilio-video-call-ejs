@@ -185,17 +185,15 @@ $(document).ready(function () {
         });
         room.disconnect();
       });
-
-      Video.createLocalTracks().then(function (localTracks) {
-        var localVideoTrack = localTracks.find(
-          (track) => track.kind === "video"
-        );
-        const container = document.getElementById("local-video");
-        container.appendChild(localVideoTrack.attach());
-      });
     },
     (error) => {
       console.error(`Unable to connect to Room: ${error.message}`);
     }
   );
+
+  Video.createLocalTracks().then(function (localTracks) {
+    var localVideoTrack = localTracks.find((track) => track.kind === "video");
+    const container = document.getElementById("local-video");
+    container.appendChild(localVideoTrack.attach());
+  });
 });
