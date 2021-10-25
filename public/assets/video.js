@@ -35,9 +35,9 @@ $(document).ready(function () {
   // });
   var localVideoTracks;
   var connectOptions = {
-    //preferredVideoCodecs: ["VP8"],
+    preferredVideoCodecs: ["VP8"],
     name: "video call",
-    tracks: localVideoTracks,
+    //tracks: localVideoTracks,
     // preferredAudioCodecs: ["OPUS"],
     // video: { frames: 25 },
     // audio: true,
@@ -53,17 +53,10 @@ $(document).ready(function () {
   if (!Twilio.Video.isSupported) {
     alert("this browser not supported");
   }
-
-  Twilio.Video.connect(token, { name: "HotLine1" }).then(
+  Twilio.Video.connect(token, connectOptions).then(
     (room) => {
       console.log(`Room connected: "${room}"`);
-      Twilio.Video.createLocalTracks().then(function (localTracks) {
-        var localVideoTrack = localTracks.find(
-          (track) => track.kind === "video"
-        );
-        const container = document.getElementById("local-video");
-        container.appendChild(localVideoTrack.attach());
-      });
+
       //#region handle microphone
       btnMute.click(function () {
         btnMute.hide();
