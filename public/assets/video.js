@@ -24,7 +24,7 @@ $(document).ready(function () {
     preferredAudioCodecs: ["OPUS"],
     preferredVideoCodecs: ["VP8"],
     audio: true,
-    //video: { frameRate: 35 },
+    video: { frameRate: 35 },
   };
 
   Twilio.Video.connect(token, connectOptions).then(
