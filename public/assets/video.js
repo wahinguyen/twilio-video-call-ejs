@@ -48,6 +48,8 @@ $(document).ready(function () {
     name: "video call",
     //tracks: localVideoTracks,
     // preferredAudioCodecs: ["OPUS"],
+    video: { frames: 25 },
+    audio: true,
     // video: { name: "camera" },
     // audio: { name: "microphone" },
     // networkQuality: {
