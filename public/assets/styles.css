@@ -22,7 +22,7 @@ body {
 }
 
 .remote-video {
-  height: 30%;
+  height: 50%;
   width: 100%;
   background-color: black;
   position: relative;
@@ -38,7 +38,7 @@ body {
 }
 
 .local-video {
-  height: 70%;
+  height: 50%;
   width: 100%;
   background-color: black;
   position: relative;
