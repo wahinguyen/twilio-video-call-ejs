@@ -20,7 +20,7 @@ $(document).ready(function () {
   var localVideo = document.getElementById("local-video");
   var remoteVideo = document.getElementById("remote-video");
 
-  var localVideoTracks;
+  //var localVideoTracks;
 
   var connectOptions = {
     name: "video call",
@@ -167,15 +167,15 @@ $(document).ready(function () {
       });
 
       Video.createLocalTracks().then((localTracks) => {
-        localVideoTracks = localTracks;
-        var localVideoTrack = localTracks.find(
-          (track) => track.kind === "video"
-        );
-        const container = document.getElementById("local-video");
-        container.appendChild(localVideoTrack.attach());
-        // localTracks.forEach((track) => {
-        //   localVideo.appendChild(track.attach());
-        // });
+        // localVideoTracks = localTracks;
+        // var localVideoTrack = localTracks.find(
+        //   (track) => track.kind === "video"
+        // );
+        // const container = document.getElementById("local-video");
+        // container.appendChild(localVideoTrack.attach());
+        localTracks.forEach((track) => {
+          localVideo.appendChild(track.attach());
+        });
         // localVideo.style = "display: none";
         // localVideo1.hide();
         // localAvatar.show();
