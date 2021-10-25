@@ -8,8 +8,8 @@ $(document).ready(function () {
   const btnUnMedia = $("#unmedia");
   const btnHangUp = $("#hangup");
 
-  // const remoteAvatar = $("#remote-avatar");
-  // const localAvatar = $("#local-avatar");
+  const remoteAvatar = $("#remote-avatar");
+  const localAvatar = $("#local-avatar");
 
   const screenAudio = $(".container-voice");
   const screenVideo = $(".container-video");
@@ -20,49 +20,35 @@ $(document).ready(function () {
   var localVideo = document.getElementById("local-video");
   var remoteVideo = document.getElementById("remote-video");
   var islocal = false;
-  //console.log(localVideoTracks);
-  Twilio.Video.createLocalTracks().then(function (localTracks) {
-    //localVideoTracks = localTracks;
-    console.log("track", localTracks);
-    //var localVideoTrack = localTracks.find((track) => track.kind === "video");
-    //const container = document.getElementById("local-video");
-    // container.innerHTML = "";
-    // container.appendChild(localVideoTrack.attach());
-    // console.log(container);
-    // localVideo.style = "display: none";
-    // localVideo1.hide();
-    // localAvatar.show();
-  });
-  //var localVideoTracks;
+  //Twilio.Video.createLocalTracks().then(function (localTracks) {
+  //localVideoTracks = localTracks;
+  //var localVideoTrack = localTracks.find((track) => track.kind === "video");
+  //const container = document.getElementById("local-video");
+  // container.innerHTML = "";
+  // container.appendChild(localVideoTrack.attach());
+  // console.log(container);
+  // localVideo.style = "display: none";
+  // localVideo1.hide();
+  // localAvatar.show();
+  //  });
 
   var connectOptions = {
     preferredVideoCodecs: ["VP8"],
+    preferredAudioCodecs: ["OPUS"],
     name: "video call",
-    //tracks: localVideoTracks,
-    // preferredAudioCodecs: ["OPUS"],
-    // video: { frames: 25 },
-    // audio: true,
     video: { name: "camera" },
     audio: { name: "microphone" },
-    // networkQuality: {
-    //   local: 1, // LocalParticipant's Network Quality verbosity [1 - 3]
-    //   remote: 2, // RemoteParticipants' Network Quality verbosity [0 - 3]
-    // },
+    networkQuality: {
+      local: 1, // LocalParticipant's Network Quality verbosity [1 - 3]
+      remote: 2, // RemoteParticipants' Network Quality verbosity [0 - 3]
+    },
   };
-  console.log(Twilio.Video.isSupported);
-
   if (!Twilio.Video.isSupported) {
     alert("this browser not supported");
   }
   Twilio.Video.connect(token, connectOptions).then(
     (room) => {
       console.log(`Room connected:`, room);
-
-      // var lc = room.localParticipant.videoTracks.find(
-      //   (lc) => lc.kind === "video"
-      // );
-      // const container = document.getElementById("local-video");
-      // container.appendChild(lc.attach());
       //#region handle microphone
       btnMute.click(function () {
         btnMute.hide();
@@ -87,8 +73,8 @@ $(document).ready(function () {
         btnUnMedia.show();
         room.localParticipant.videoTracks.forEach((publication) => {
           publication.track.disable();
-          // localVideo1.hide();
-          // localAvatar.show();
+          localVideo.style = "display: none";
+          localAvatar.show();
         });
       });
 
@@ -97,37 +83,36 @@ $(document).ready(function () {
         btnUnMedia.hide();
         room.localParticipant.videoTracks.forEach((publication) => {
           publication.track.enable();
-          // localVideo1.show();
-          // localAvatar.hide();
+          localVideo.style = "display: block";
+          localAvatar.hide();
         });
       });
       //#endregion
 
       function handleTrackEnabled(track) {
         track.on("enabled", () => {
-          //  if (track.kind == "video") {
-          // remoteVideo1.show();
-          // remoteAvatar.hide();
-          //  }
+          if (track.kind == "video") {
+            remoteVideo.style = "display: block";
+            remoteAvatar.hide();
+          }
         });
       }
 
       function handleTrackDisabled(track) {
         track.on("disabled", () => {
-          //  if (track.kind == "video") {
-          // remoteVideo1.hide();
-          // remoteAvatar.show();
-          //  }
+          if (track.kind == "video") {
+            remoteVideo.style = "display: none";
+            remoteAvatar.show();
+          }
         });
       }
       // Log new Participants as they connect to the Room
       room.on("participantConnected", (participant) => {
         console.log(`A remote Participant connected: ${participant.identity}`);
-        // screenAudio.hide();
-        // screenVideo.show();
+        screenAudio.hide();
+        screenVideo.show();
         participant.tracks.forEach((publication) => {
           if (publication.isSubscribed) {
-            console.log("pub: ", publication.track);
             const track = publication.track;
             const container = document.getElementById("remote-video");
             container.appendChild(track.attach());
@@ -138,22 +123,20 @@ $(document).ready(function () {
         participant.on("trackSubscribed", (track) => {
           const container = document.getElementById("remote-video");
           container.appendChild(track.attach());
-          //  remoteVideo.appendChild(track.attach());
+          // remoteVideo.appendChild(track.attach());
         });
-        // remoteVideo1.hide();
-        // remoteAvatar.show();
+        remoteVideo.style = "display: none";
+        remoteAvatar.show();
       });
 
       // Log any Participants already connected to the Room
       room.participants.forEach((participant) => {
-        console.log(`Participant`, participant);
         console.log(`Participant "${participant.identity}"`);
-        // screenAudio.hide();
-        // screenVideo.show();
+        screenAudio.hide();
+        screenVideo.show();
         participant.tracks.forEach((publication) => {
           if (publication.track) {
-            const container = document.getElementById("remote-video");
-            container.appendChild(publication.track.attach());
+            remoteVideo.appendChild(publication.track.attach());
           }
           if (publication.isSubscribed) {
             handleTrackDisabled(publication.track);
@@ -163,11 +146,10 @@ $(document).ready(function () {
           publication.on("subscribed", handleTrackEnabled);
         });
         participant.on("trackSubscribed", (track) => {
-          const container = document.getElementById("remote-video");
-          container.appendChild(track.attach());
+          remoteVideo.appendChild(track.attach());
         });
-        // remoteAvatar.show();
-        // remoteVideo1.hide();
+        remoteVideo.style = "display: none";
+        remoteAvatar.show();
       });
 
       room.on("participantDisconnected", (participant) => {
@@ -198,9 +180,9 @@ $(document).ready(function () {
       if (!islocal) {
         room.localParticipant.tracks.forEach((publication) => {
           if (publication.track.kind === "video") {
-            console.log(publication.track);
-            const container = document.getElementById("local-video");
-            container.appendChild(publication.track.attach());
+            localVideo.appendChild(publication.track.attach());
+            localVideo.style = "display: none";
+            localAvatar.show();
           }
         });
         islocal = true;
