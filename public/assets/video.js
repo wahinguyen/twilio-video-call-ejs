@@ -20,7 +20,6 @@ $(document).ready(function () {
   var localVideo = document.getElementById("local-video");
   var remoteVideo = document.getElementById("remote-video");
 
-  var localVideoTracks;
   //console.log(localVideoTracks);
   // Video.createLocalTracks().then(function (localTracks) {
   //   localVideoTracks = localTracks;
@@ -43,10 +42,17 @@ $(document).ready(function () {
   //   container.appendChild(localVideoTrack.attach());
   //   return;
   // });
+  var localVideoTracks;
+  Video.createLocalTracks().then((localTracks) => {
+    this.localVideoTracks = localTracks;
+    var localVideoTrack = localTracks.find((track) => track.kind === "video");
+    const container = document.getElementById("local-video");
+    container.appendChild(localVideoTrack.attach());
+  });
   var connectOptions = {
     preferredVideoCodecs: ["VP8"],
     name: "video call",
-    //tracks: localVideoTracks,
+    tracks: this.localVideoTracks,
     // preferredAudioCodecs: ["OPUS"],
     // video: { frames: 25 },
     // audio: true,
@@ -61,14 +67,6 @@ $(document).ready(function () {
   Video.connect(token, connectOptions).then(
     (room) => {
       console.log(`Room connected: "${room}"`);
-      Video.createLocalTracks().then((localTracks) => {
-        var localVideoTrack = localTracks.find(
-          (track) => track.kind === "video"
-        );
-        const container = document.getElementById("local-video");
-        container.appendChild(localVideoTrack.attach());
-      });
-
       //#region handle microphone
       btnMute.click(function () {
         btnMute.hide();
