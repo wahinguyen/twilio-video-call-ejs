@@ -42,17 +42,11 @@ $(document).ready(function () {
   //   container.appendChild(localVideoTrack.attach());
   //   return;
   // });
-  const localVideoTracks;
-  Video.createLocalTracks().then((localTracks) => {
-    localVideoTracks = localTracks;
-    var localVideoTrack = localTracks.find((track) => track.kind === "video");
-    const container = document.getElementById("local-video");
-    container.appendChild(localVideoTrack.attach());
-  });
+
   var connectOptions = {
     preferredVideoCodecs: ["VP8"],
     name: "video call",
-    tracks: localVideoTracks,
+    tracks: [],
     // preferredAudioCodecs: ["OPUS"],
     // video: { frames: 25 },
     // audio: true,
@@ -64,8 +58,13 @@ $(document).ready(function () {
     // },
   };
 
-  Video.connect(token, connectOptions).then(
+  Twilio.Video.connect(token, connectOptions).then(
     (room) => {
+      Twilio.Video.createLocalVideoTrack().then((localTracks) => {
+        //var localVideoTrack = localTracks.find((track) => track.kind === "video");
+        const container = document.getElementById("local-video");
+        container.appendChild(localTracks.attach());
+      });
       console.log(`Room connected: "${room}"`);
       //#region handle microphone
       btnMute.click(function () {
