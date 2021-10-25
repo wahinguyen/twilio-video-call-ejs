@@ -20,8 +20,8 @@ $(document).ready(function () {
   var localVideo = document.getElementById("local-video");
   var remoteVideo = document.getElementById("remote-video");
 
-  var localVideoTracks;
-
+  //var localVideoTracks;
+  //console.log(localVideoTracks);
   // Video.createLocalTracks().then(function (localTracks) {
   //   localVideoTracks = localTracks;
 
@@ -35,14 +35,14 @@ $(document).ready(function () {
   //   // localAvatar.show();
   // });
 
-  Video.createLocalTracks().then(function (localTracks) {
-    localVideoTracks = localTracks;
+  // Video.createLocalTracks().then(function (localTracks) {
+  //   localVideoTracks = localTracks;
 
-    var localVideoTrack = localTracks.find((track) => track.kind === "video");
-    const container = document.getElementById("local-video");
-    container.appendChild(localVideoTrack.attach());
-    return;
-  });
+  //   var localVideoTrack = localTracks.find((track) => track.kind === "video");
+  //   const container = document.getElementById("local-video");
+  //   container.appendChild(localVideoTrack.attach());
+  //   return;
+  // });
 
   var connectOptions = {
     preferredVideoCodecs: ["VP8"],
