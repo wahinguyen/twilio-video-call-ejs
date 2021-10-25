@@ -34,7 +34,7 @@ $(document).ready(function () {
   });
 
   var connectOptions = {
-    preferredVideoCodecs: ["VP8"],
+    //preferredVideoCodecs: ["VP8"],
     name: "video call",
     // preferredAudioCodecs: ["OPUS"],
     tracks: localVideoTracks,
@@ -181,15 +181,16 @@ $(document).ready(function () {
         });
         room.disconnect();
       });
-      Video.createLocalTracks().then((localTracks) => {
-        localTracks.forEach((track) => {
-          const container = document.getElementById("local-video");
-          container.appendChild(track.attach());
-        });
-      });
     },
     (error) => {
       console.error(`Unable to connect to Room: ${error.message}`);
     }
   );
+
+  Video.createLocalTracks().then((localTracks) => {
+    localTracks.forEach((track) => {
+      const container = document.getElementById("local-video");
+      container.appendChild(track.attach());
+    });
+  });
 });
