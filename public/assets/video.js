@@ -46,7 +46,7 @@ $(document).ready(function () {
   var connectOptions = {
     preferredVideoCodecs: ["VP8"],
     name: "video call",
-    tracks: [],
+    //tracks: [],
     // preferredAudioCodecs: ["OPUS"],
     // video: { frames: 25 },
     // audio: true,
