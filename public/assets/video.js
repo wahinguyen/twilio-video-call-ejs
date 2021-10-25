@@ -22,21 +22,21 @@ $(document).ready(function () {
 
   // var localVideoTracks;
 
-  // Video.createLocalTracks().then((localTracks) => {
-  //   localVideoTracks = localTracks;
+  Video.createLocalTracks().then((localTracks) => {
+    localVideoTracks = localTracks;
 
-  //   // localVideo.style = "display: none";
-  //   // localVideo1.hide();
-  //   // localAvatar.show();
-  // });
+    // localVideo.style = "display: none";
+    // localVideo1.hide();
+    // localAvatar.show();
+  });
 
   var connectOptions = {
     name: "video call",
     // preferredVideoCodecs: ["H.264"],
     // preferredAudioCodecs: ["OPUS"],
-    // tracks: Video.createLocalTracks().then((localTracks) => localTracks),
-    audio: { name: "microphone" },
-    video: { name: "camera" },
+    tracks: localVideoTracks,
+    // audio: { name: "microphone" },
+    // video: { name: "camera" },
     networkQuality: {
       local: 1, // LocalParticipant's Network Quality verbosity [1 - 3]
       remote: 2, // RemoteParticipants' Network Quality verbosity [0 - 3]
