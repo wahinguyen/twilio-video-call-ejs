@@ -33,7 +33,7 @@ $(document).ready(function () {
   //   // localVideo1.hide();
   //   // localAvatar.show();
   // });
-  var localVideoTracks;
+  //var localVideoTracks;
   Twilio.Video.createLocalTracks().then(function (localTracks) {
     var localVideoTrack = localTracks.find((track) => track.kind === "video");
     const container = document.getElementById("local-video");
@@ -47,8 +47,8 @@ $(document).ready(function () {
     // preferredAudioCodecs: ["OPUS"],
     // video: { frames: 25 },
     // audio: true,
-    //video: true,
-    //audio: { name: "microphone" },
+    video: { name: "camera" },
+    audio: { name: "microphone" },
     // networkQuality: {
     //   local: 1, // LocalParticipant's Network Quality verbosity [1 - 3]
     //   remote: 2, // RemoteParticipants' Network Quality verbosity [0 - 3]
