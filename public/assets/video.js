@@ -43,6 +43,11 @@ $(document).ready(function () {
   Video.connect(token, connectOptions).then(
     (room) => {
       console.log(`Room connected: "${room}"`);
+      var localVideoTrack = localVideoTracks.find(
+        (track) => track.kind === "video"
+      );
+      const container = document.getElementById("local-video");
+      container.appendChild(localVideoTrack.attach());
 
       //#region handle microphone
       btnMute.click(function () {
@@ -171,12 +176,6 @@ $(document).ready(function () {
         });
         room.disconnect();
       });
-
-      var localVideoTrack = localVideoTracks.find(
-        (track) => track.kind === "video"
-      );
-      const container = document.getElementById("local-video");
-      container.appendChild(localVideoTrack.attach());
     },
     (error) => {
       console.error(`Unable to connect to Room: ${error.message}`);
