@@ -24,12 +24,7 @@ $(document).ready(function () {
 
   Video.createLocalTracks().then((localTracks) => {
     localVideoTracks = localTracks;
-    const container = document.getElementById("local-video");
-    localTracks.forEach((track) => {
-      if (track.kind === "video") {
-        container.appendChild(track.attach());
-      }
-    });
+
     // var localVideoTrack = localTracks.find((track) => track.kind === "video");
     // const container = document.getElementById("local-video");
     // container.appendChild(localVideoTrack.attach());
@@ -50,6 +45,12 @@ $(document).ready(function () {
     //   remote: 2, // RemoteParticipants' Network Quality verbosity [0 - 3]
     // },
   };
+  const container = document.getElementById("local-video");
+  localVideoTracks.forEach((track) => {
+    if (track.kind === "video") {
+      container.appendChild(track.attach());
+    }
+  });
 
   // async function createLocalVideo(lvt) {
   //   var localVideoTrack = lvt.find((track) => track.kind === "video");
