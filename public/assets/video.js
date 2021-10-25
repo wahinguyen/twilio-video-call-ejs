@@ -21,9 +21,9 @@ $(document).ready(function () {
   var remoteVideo = document.getElementById("remote-video");
 
   var localVideoTracks;
-  Video.createLocalTracks().then((localTracks) => {
+  Video.createLocalVideoTrack().then((localTracks) => {
     localVideoTracks = localTracks;
-    var localVideoTrack = localTracks.find((track) => track.kind === "video");
+    //var localVideoTrack = localTracks.find((track) => track.kind === "video");
     localVideo.appendChild(localVideoTrack.attach());
     // localTracks.forEach((track) => {
     //   localVideo.appendChild(track.attach());
