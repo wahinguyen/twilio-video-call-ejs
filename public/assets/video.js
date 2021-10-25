@@ -49,9 +49,11 @@ $(document).ready(function () {
     // },
   };
   console.log(Twilio.Video.isSupported);
+
   if (!Twilio.Video.isSupported) {
     alert("this browser not supported");
   }
+
   Twilio.Video.connect(token, { name: "HotLine1" }).then(
     (room) => {
       console.log(`Room connected: "${room}"`);
