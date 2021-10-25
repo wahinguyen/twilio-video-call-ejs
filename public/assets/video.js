@@ -107,12 +107,12 @@ $(document).ready(function () {
           if (publication.track) {
             remoteVideo.appendChild(publication.track.attach());
           }
-          // if (publication.isSubscribed) {
-          //   handleTrackDisabled(publication.track);
-          //   handleTrackEnabled(publication.track);
-          // }
-          //  publication.on("subscribed", handleTrackDisabled);
-          //  publication.on("subscribed", handleTrackEnabled);
+          if (publication.isSubscribed) {
+            handleTrackDisabled(publication.track);
+            handleTrackEnabled(publication.track);
+          }
+          publication.on("subscribed", handleTrackDisabled);
+          publication.on("subscribed", handleTrackEnabled);
         });
         participant.on("trackSubscribed", (track) => {
           remoteVideo.appendChild(track.attach());
@@ -120,6 +120,7 @@ $(document).ready(function () {
         // remoteAvatar.show();
         // remoteVideo1.hide();
       });
+
       // Log new Participants as they connect to the Room
       room.on("participantConnected", (participant) => {
         console.log(`A remote Participant connected: ${participant.identity}`);
@@ -127,11 +128,11 @@ $(document).ready(function () {
         screenVideo.show();
         participant.tracks.forEach((publication) => {
           if (publication.isSubscribed) {
-            //  handleTrackEnabled(publication.track);
+            handleTrackEnabled(publication.track);
             remoteVideo.appendChild(publication.track.attach());
             console.log("publication.track", publication.track);
           }
-          //  publication.on("subscribed", handleTrackEnabled);
+          publication.on("subscribed", handleTrackEnabled);
         });
         participant.on("trackSubscribed", (track) => {
           remoteVideo.appendChild(track.attach());
