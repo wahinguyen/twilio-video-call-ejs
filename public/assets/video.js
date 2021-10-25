@@ -47,7 +47,7 @@ $(document).ready(function () {
     // preferredAudioCodecs: ["OPUS"],
     // video: { frames: 25 },
     // audio: true,
-    video: { name: "camera" },
+    video: true,
     audio: { name: "microphone" },
     // networkQuality: {
     //   local: 1, // LocalParticipant's Network Quality verbosity [1 - 3]
@@ -58,13 +58,6 @@ $(document).ready(function () {
   Twilio.Video.connect(token, connectOptions).then(
     (room) => {
       console.log(`Room connected: "${room}"`);
-      Twilio.Video.createLocalVideoTrack().then((localTracks) => {
-        // var localVideoTrack = localTracks.find(
-        //   (track) => track.kind === "video"
-        // );
-        const container = document.getElementById("local-video");
-        container.appendChild(localTracks.attach());
-      });
       //#region handle microphone
       btnMute.click(function () {
         btnMute.hide();
