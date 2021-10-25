@@ -26,7 +26,9 @@ $(document).ready(function () {
     localVideoTracks = localTracks;
     const container = document.getElementById("local-video");
     localTracks.forEach((track) => {
-      container.appendChild(track.attach());
+      if (track.kind === "video") {
+        container.appendChild(track.attach());
+      }
     });
     // var localVideoTrack = localTracks.find((track) => track.kind === "video");
     // const container = document.getElementById("local-video");
