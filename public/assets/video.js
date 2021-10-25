@@ -21,23 +21,11 @@ $(document).ready(function () {
   var remoteVideo = document.getElementById("remote-video");
 
   var localVideoTracks;
-  Video.createLocalTracks().then((localTracks) => {
-    localVideoTracks = localTracks;
-    var localVideoTrack = localTracks.find((track) => track.kind === "video");
-    const container = document.getElementById("local-video");
-    container.appendChild(localVideoTrack.attach());
-    // localTracks.forEach((track) => {
-    //   localVideo.appendChild(track.attach());
-    // });
-    // localVideo.style = "display: none";
-    // localVideo1.hide();
-    // localAvatar.show();
-  });
 
   var connectOptions = {
     name: "video call",
-    preferredVideoCodecs: ["H.264"],
-    preferredAudioCodecs: ["OPUS"],
+    // preferredVideoCodecs: ["H.264"],
+    // preferredAudioCodecs: ["OPUS"],
     audio: { name: "microphone" },
     video: { name: "camera" },
     networkQuality: {
@@ -176,6 +164,21 @@ $(document).ready(function () {
           attachedElements.forEach((element) => element.remove());
         });
         room.disconnect();
+      });
+
+      Video.createLocalTracks().then((localTracks) => {
+        localVideoTracks = localTracks;
+        var localVideoTrack = localTracks.find(
+          (track) => track.kind === "video"
+        );
+        const container = document.getElementById("local-video");
+        container.appendChild(localVideoTrack.attach());
+        // localTracks.forEach((track) => {
+        //   localVideo.appendChild(track.attach());
+        // });
+        // localVideo.style = "display: none";
+        // localVideo1.hide();
+        // localAvatar.show();
       });
     },
     (error) => {
