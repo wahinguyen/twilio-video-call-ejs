@@ -47,6 +47,8 @@ $(document).ready(function () {
   var connectOptions = {
     preferredVideoCodecs: ["VP8"],
     name: "video call",
+    video: true,
+    audio: true,
     //tracks: localVideoTracks,
     // preferredAudioCodecs: ["OPUS"],
     // audio: { name: "microphone" },
