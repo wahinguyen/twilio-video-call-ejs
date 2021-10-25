@@ -37,7 +37,7 @@ $(document).ready(function () {
   var connectOptions = {
     preferredVideoCodecs: ["VP8"],
     name: "video call",
-    tracks: localVideoTracks,
+    tracks: undefined,
     // preferredAudioCodecs: ["OPUS"],
     //audio: { name: "microphone" },
     //video: { name: "camera" },
@@ -52,20 +52,19 @@ $(document).ready(function () {
   //   await localVideo.appendChild(localVideoTrack.attach());
   // }
 
+  Video.createLocalTracks().then(function (localTracks) {
+    var localVideoTrack = localTracks.find((track) => track.kind === "video");
+    const container = document.getElementById("local-video");
+    container.appendChild(localVideoTrack.attach());
+    // localVideo.style = "display: none";
+    // localVideo1.hide();
+    // localAvatar.show();
+  });
+
   Video.connect(token, connectOptions).then(
     (room) => {
       console.log(`Room connected: "${room}"`);
 
-      Video.createLocalTracks().then(function (localTracks) {
-        var localVideoTrack = localTracks.find(
-          (track) => track.kind === "video"
-        );
-        const container = document.getElementById("local-video");
-        container.appendChild(localVideoTrack.attach());
-        // localVideo.style = "display: none";
-        // localVideo1.hide();
-        // localAvatar.show();
-      });
       //#region handle microphone
       btnMute.click(function () {
         btnMute.hide();
