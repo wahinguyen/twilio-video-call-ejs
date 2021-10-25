@@ -19,20 +19,20 @@ $(document).ready(function () {
 
   var localVideo = document.getElementById("local-video");
   var remoteVideo = document.getElementById("remote-video");
-
+  var islocal = false;
   //console.log(localVideoTracks);
-  // Video.createLocalTracks().then(function (localTracks) {
-  //   localVideoTracks = localTracks;
-
-  //   var localVideoTrack = localTracks.find((track) => track.kind === "video");
-  //   const container = document.getElementById("local-video");
-  //   container.innerHTML = "";
-  //   container.appendChild(localVideoTrack.attach());
-  //   console.log(container);
-  //   // localVideo.style = "display: none";
-  //   // localVideo1.hide();
-  //   // localAvatar.show();
-  // });
+  Twilio.Video.createLocalTracks().then(function (localTracks) {
+    //localVideoTracks = localTracks;
+    console.log("track", localTracks);
+    //var localVideoTrack = localTracks.find((track) => track.kind === "video");
+    //const container = document.getElementById("local-video");
+    // container.innerHTML = "";
+    // container.appendChild(localVideoTrack.attach());
+    // console.log(container);
+    // localVideo.style = "display: none";
+    // localVideo1.hide();
+    // localAvatar.show();
+  });
   //var localVideoTracks;
 
   var connectOptions = {
@@ -58,6 +58,11 @@ $(document).ready(function () {
     (room) => {
       console.log(`Room connected:`, room);
 
+      // var lc = room.localParticipant.videoTracks.find(
+      //   (lc) => lc.kind === "video"
+      // );
+      // const container = document.getElementById("local-video");
+      // container.appendChild(lc.attach());
       //#region handle microphone
       btnMute.click(function () {
         btnMute.hide();
@@ -190,14 +195,25 @@ $(document).ready(function () {
         room.disconnect();
       });
 
-      Twilio.Video.createLocalTracks().then(function (localTracks) {
-        var localVideoTrack = localTracks.find(
-          (track) => track.kind === "video"
-        );
-        const container = document.getElementById("local-video");
-        container.appendChild(localVideoTrack.attach());
-        console.log(container);
-      });
+      if (!islocal) {
+        room.localParticipant.tracks.forEach((publication) => {
+          if (publication.track.kind === "video") {
+            console.log(publication.track);
+            const container = document.getElementById("local-video");
+            container.appendChild(publication.track.attach());
+          }
+        });
+        islocal = true;
+      }
+
+      // Twilio.Video.createLocalTracks().then(function (localTracks) {
+      //   var localVideoTrack = localTracks.find(
+      //     (track) => track.kind === "video"
+      //   );
+      //   const container = document.getElementById("local-video");
+      //   container.appendChild(localVideoTrack.attach());
+      //   console.log(container);
+      // });
     },
     (error) => {
       console.error(`Unable to connect to Room: ${error.message}`);
