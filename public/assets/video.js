@@ -181,7 +181,8 @@ $(document).ready(function () {
         var localVideoTrack = localTracks.find(
           (track) => track.kind === "video"
         );
-        localVideo.appendChild(localVideoTrack.attach());
+        const container = document.getElementById("local-video");
+        container.appendChild(localVideoTrack.attach());
         // localVideo.style = "display: none";
         // localVideo1.hide();
         // localAvatar.show();
