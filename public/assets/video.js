@@ -109,7 +109,7 @@ $(document).ready(function () {
           //  }
         });
       }
-
+      localVideo.show();
       // Log new Participants as they connect to the Room
       room.on("participantConnected", (participant) => {
         console.log(`A remote Participant connected: ${participant.identity}`);
