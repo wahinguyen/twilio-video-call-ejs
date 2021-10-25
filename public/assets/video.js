@@ -22,19 +22,18 @@ $(document).ready(function () {
 
   var localVideoTracks;
 
-  Video.createLocalTracks().then(function (localTracks) {
-    localVideoTracks = localTracks;
+  // Video.createLocalTracks().then(function (localTracks) {
+  //   localVideoTracks = localTracks;
 
-    var localVideoTrack = localTracks.find((track) => track.kind === "video");
-    const container = document.getElementById("local-video");
-    container.innerHTML = "";
-    container.appendChild(localVideoTrack.attach());
-    console.log(container);
-    // localVideo.style = "display: none";
-    // localVideo1.hide();
-    // localAvatar.show();
-  });
-
+  //   var localVideoTrack = localTracks.find((track) => track.kind === "video");
+  //   const container = document.getElementById("local-video");
+  //   container.innerHTML = "";
+  //   container.appendChild(localVideoTrack.attach());
+  //   console.log(container);
+  //   // localVideo.style = "display: none";
+  //   // localVideo1.hide();
+  //   // localAvatar.show();
+  // });
   var connectOptions = {
     preferredVideoCodecs: ["VP8"],
     name: "video call",
@@ -56,6 +55,17 @@ $(document).ready(function () {
   Video.connect(token, connectOptions).then(
     (room) => {
       console.log(`Room connected: "${room}"`);
+
+      Video.createLocalTracks().then(function (localTracks) {
+        var localVideoTrack = localTracks.find(
+          (track) => track.kind === "video"
+        );
+        const container = document.getElementById("local-video");
+        container.appendChild(localVideoTrack.attach());
+        // localVideo.style = "display: none";
+        // localVideo1.hide();
+        // localAvatar.show();
+      });
       //#region handle microphone
       btnMute.click(function () {
         btnMute.hide();
