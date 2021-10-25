@@ -33,9 +33,13 @@ $(document).ready(function () {
   //   // localVideo1.hide();
   //   // localAvatar.show();
   // });
+  var localVideoTracks;
 
   Twilio.Video.createLocalTracks().then(function (localTracks) {
-    var localVideoTrack = localTracks.find((track) => track.kind === "video");
+    localVideoTracks = localTracks;
+    var localVideoTrack = localVideoTracks.find(
+      (track) => track.kind === "video"
+    );
     const container = document.getElementById("local-video");
     container.appendChild(localVideoTrack.attach());
   });
@@ -43,7 +47,7 @@ $(document).ready(function () {
   var connectOptions = {
     //preferredVideoCodecs: ["VP8"],
     name: "video call",
-    //tracks: [],
+    tracks: localVideoTracks,
     // preferredAudioCodecs: ["OPUS"],
     // video: { frames: 25 },
     // audio: true,
