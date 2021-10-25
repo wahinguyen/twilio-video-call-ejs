@@ -45,12 +45,6 @@ $(document).ready(function () {
     //   remote: 2, // RemoteParticipants' Network Quality verbosity [0 - 3]
     // },
   };
-  const container = document.getElementById("local-video");
-  localVideoTracks.forEach((track) => {
-    if (track.kind === "video") {
-      container.appendChild(track.attach());
-    }
-  });
 
   // async function createLocalVideo(lvt) {
   //   var localVideoTrack = lvt.find((track) => track.kind === "video");
@@ -59,6 +53,11 @@ $(document).ready(function () {
 
   Video.connect(token, connectOptions).then(
     (room) => {
+      var lct;
+
+      Video.createLocalTracks().then((localTracks) => {
+        lct = localTracks;
+      });
       console.log(`Room connected: "${room}"`);
       //#region handle microphone
       btnMute.click(function () {
@@ -187,6 +186,10 @@ $(document).ready(function () {
         });
         room.disconnect();
       });
+
+      const container = document.getElementById("local-video");
+      var localVideoTrack = lvt.find((track) => track.kind === "video");
+      container.appendChild(localVideoTrack.attach());
     },
     (error) => {
       console.error(`Unable to connect to Room: ${error.message}`);
