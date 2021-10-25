@@ -14,7 +14,7 @@ $(document).ready(function () {
   const screenAudio = $(".container-voice");
   const screenVideo = $(".container-video");
 
-  // var localVideo1 = $("#local-video");
+  var localVideo1 = $("#local-video");
   // var remoteVideo1 = $("#remote-video");
 
   var localVideo = document.getElementById("local-video");
@@ -109,7 +109,7 @@ $(document).ready(function () {
           //  }
         });
       }
-      localVideo.show();
+      localVideo1.show();
       // Log new Participants as they connect to the Room
       room.on("participantConnected", (participant) => {
         console.log(`A remote Participant connected: ${participant.identity}`);
