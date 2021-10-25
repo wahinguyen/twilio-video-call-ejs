@@ -27,6 +27,7 @@ $(document).ready(function () {
 
     var localVideoTrack = localTracks.find((track) => track.kind === "video");
     const container = document.getElementById("local-video");
+    container.innerHTML = "";
     container.appendChild(localVideoTrack.attach());
     // localVideo.style = "display: none";
     // localVideo1.hide();
