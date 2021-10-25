@@ -23,9 +23,9 @@ $(document).ready(function () {
   var localVideoTracks;
   Video.createLocalTracks().then((localTracks) => {
     localVideoTracks = localTracks;
-    // var localVideoTrack = localTracks.find((track) => track.kind === "video");
-    // const container = document.getElementById("local-video");
-    // container.appendChild(localVideoTrack.attach());
+    var localVideoTrack = localTracks.find((track) => track.kind === "video");
+    const container = document.getElementById("local-video");
+    container.appendChild(localVideoTrack.attach());
     // localTracks.forEach((track) => {
     //   localVideo.appendChild(track.attach());
     // });
@@ -175,14 +175,6 @@ $(document).ready(function () {
           attachedElements.forEach((element) => element.remove());
         });
         room.disconnect();
-      });
-      Video.createLocalTracks().then((localTracks) => {
-        var localVideoTrack = localTracks.find(
-          (track) => track.kind === "video"
-        );
-        const container = document.getElementById("local-video");
-        container.innerHTML = "";
-        container.appendChild(localVideoTrack.attach());
       });
     },
     (error) => {
