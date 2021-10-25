@@ -41,14 +41,14 @@ $(document).ready(function () {
   });
 
   var connectOptions = {
-    preferredVideoCodecs: ["VP8"],
+    //preferredVideoCodecs: ["VP8"],
     name: "video call",
     //tracks: [],
     // preferredAudioCodecs: ["OPUS"],
     // video: { frames: 25 },
     // audio: true,
-    video: true,
-    audio: { name: "microphone" },
+    //video: true,
+    //audio: { name: "microphone" },
     // networkQuality: {
     //   local: 1, // LocalParticipant's Network Quality verbosity [1 - 3]
     //   remote: 2, // RemoteParticipants' Network Quality verbosity [0 - 3]
