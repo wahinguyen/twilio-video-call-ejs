@@ -61,10 +61,12 @@ $(document).ready(function () {
   Video.connect(token, connectOptions).then(
     (room) => {
       console.log(`Room connected: "${room}"`);
-      Video.createLocalVideoTrack().then((localTracks) => {
-        // var localVideoTrack = localTracks.find((track) => track.kind === "video");
+      Video.createLocalTracks().then((localTracks) => {
+        var localVideoTrack = localTracks.find(
+          (track) => track.kind === "video"
+        );
         const container = document.getElementById("local-video");
-        container.appendChild(localTracks.attach());
+        container.appendChild(localVideoTrack.attach());
       });
 
       //#region handle microphone
