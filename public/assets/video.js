@@ -48,7 +48,10 @@ $(document).ready(function () {
     //   remote: 2, // RemoteParticipants' Network Quality verbosity [0 - 3]
     // },
   };
-
+  console.log(Twilio.Video.isSupported);
+  if (!Twilio.Video.isSupported) {
+    alert("this browser not supported");
+  }
   Twilio.Video.connect(token, { name: "HotLine1" }).then(
     (room) => {
       console.log(`Room connected: "${room}"`);
@@ -109,7 +112,6 @@ $(document).ready(function () {
           //  }
         });
       }
-      localVideo1.show();
       // Log new Participants as they connect to the Room
       room.on("participantConnected", (participant) => {
         console.log(`A remote Participant connected: ${participant.identity}`);
