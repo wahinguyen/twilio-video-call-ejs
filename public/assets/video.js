@@ -22,22 +22,22 @@ $(document).ready(function () {
 
   var localVideoTracks;
 
-  Video.createLocalTracks().then((localTracks) => {
+  Video.createLocalTracks().then(function (localTracks) {
     localVideoTracks = localTracks;
 
-    // var localVideoTrack = localTracks.find((track) => track.kind === "video");
-    // const container = document.getElementById("local-video");
-    // container.appendChild(localVideoTrack.attach());
+    var localVideoTrack = localTracks.find((track) => track.kind === "video");
+    const container = document.getElementById("local-video");
+    container.appendChild(localVideoTrack.attach());
     // localVideo.style = "display: none";
     // localVideo1.hide();
     // localAvatar.show();
   });
 
   var connectOptions = {
-    //preferredVideoCodecs: ["VP8"],
+    preferredVideoCodecs: ["VP8"],
     name: "video call",
-    // preferredAudioCodecs: ["OPUS"],
     tracks: localVideoTracks,
+    // preferredAudioCodecs: ["OPUS"],
     //audio: { name: "microphone" },
     //video: { name: "camera" },
     // networkQuality: {
@@ -112,6 +112,28 @@ $(document).ready(function () {
         });
       }
 
+      // Log new Participants as they connect to the Room
+      room.on("participantConnected", (participant) => {
+        console.log(`A remote Participant connected: ${participant.identity}`);
+        // screenAudio.hide();
+        // screenVideo.show();
+        participant.tracks.forEach((publication) => {
+          if (publication.isSubscribed) {
+            console.log("pub: ", publication.track);
+            const track = publication.track;
+            document.getElementById("remote-video").appendChild(track.attach());
+            //  handleTrackEnabled(publication.track);
+          }
+          //  publication.on("subscribed", handleTrackEnabled);
+        });
+        participant.on("trackSubscribed", (track) => {
+          document.getElementById("remote-video").appendChild(track.attach());
+          //  remoteVideo.appendChild(track.attach());
+        });
+        // remoteVideo1.hide();
+        // remoteAvatar.show();
+      });
+
       // Log any Participants already connected to the Room
       room.participants.forEach((participant) => {
         console.log(`Participant "${participant.identity}"`);
@@ -119,42 +141,22 @@ $(document).ready(function () {
         screenVideo.show();
         participant.tracks.forEach((publication) => {
           if (publication.track) {
-            remoteVideo.appendChild(publication.track.attach());
+            document
+              .getElementById("remote-video")
+              .appendChild(publication.track.attach());
           }
-          if (publication.isSubscribed) {
-            handleTrackDisabled(publication.track);
-            handleTrackEnabled(publication.track);
-          }
-          publication.on("subscribed", handleTrackDisabled);
-          publication.on("subscribed", handleTrackEnabled);
+          // if (publication.isSubscribed) {
+          //   handleTrackDisabled(publication.track);
+          //   handleTrackEnabled(publication.track);
+          // }
+          // publication.on("subscribed", handleTrackDisabled);
+          // publication.on("subscribed", handleTrackEnabled);
         });
         participant.on("trackSubscribed", (track) => {
-          remoteVideo.appendChild(track.attach());
+          document.getElementById("remote-video").appendChild(track.attach());
         });
         // remoteAvatar.show();
         // remoteVideo1.hide();
-      });
-
-      // Log new Participants as they connect to the Room
-      room.on("participantConnected", (participant) => {
-        console.log(`A remote Participant connected: ${participant.identity}`);
-        screenAudio.hide();
-        screenVideo.show();
-        participant.tracks.forEach((publication) => {
-          console.log("pub: ", publication);
-          if (publication.isSubscribed) {
-            console.log("pub: ", publication.track);
-            //  handleTrackEnabled(publication.track);
-            // console.log("publication.track", publication.track);
-          }
-          //  publication.on("subscribed", handleTrackEnabled);
-        });
-        participant.on("trackSubscribed", (track) => {
-          console.log(track);
-          remoteVideo.appendChild(track.attach());
-        });
-        // remoteVideo1.hide();
-        // remoteAvatar.show();
       });
 
       room.on("participantDisconnected", (participant) => {
