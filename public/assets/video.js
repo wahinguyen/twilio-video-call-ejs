@@ -21,8 +21,10 @@ $(document).ready(function () {
   var remoteVideo = document.getElementById("remote-video");
 
   var connectOptions = {
+    preferredAudioCodecs: ["OPUS"],
+    preferredVideoCodecs: ["VP8"],
     audio: true,
-    video: { frameRate: 30 },
+    //video: { frameRate: 35 },
   };
 
   Twilio.Video.connect(token, connectOptions).then(
