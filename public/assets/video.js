@@ -60,12 +60,14 @@ $(document).ready(function () {
 
   Twilio.Video.connect(token, connectOptions).then(
     (room) => {
-      Twilio.Video.createLocalVideoTrack().then((localTracks) => {
-        //var localVideoTrack = localTracks.find((track) => track.kind === "video");
-        const container = document.getElementById("local-video");
-        container.appendChild(localTracks.attach());
-      });
       console.log(`Room connected: "${room}"`);
+      Twilio.Video.createLocalTracks().then((localTracks) => {
+        var localVideoTrack = localTracks.find(
+          (track) => track.kind === "video"
+        );
+        const container = document.getElementById("local-video");
+        container.appendChild(localVideoTrack.attach());
+      });
       //#region handle microphone
       btnMute.click(function () {
         btnMute.hide();
