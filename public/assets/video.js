@@ -24,7 +24,8 @@ $(document).ready(function () {
   Video.createLocalTracks().then((localTracks) => {
     localVideoTracks = localTracks;
     var localVideoTrack = localTracks.find((track) => track.kind === "video");
-    localVideo.appendChild(localVideoTrack.attach());
+    const container = document.getElementById("local-video");
+    container.appendChild(localVideoTrack.attach());
     // localTracks.forEach((track) => {
     //   localVideo.appendChild(track.attach());
     // });
