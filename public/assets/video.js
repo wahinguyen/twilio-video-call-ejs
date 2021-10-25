@@ -22,22 +22,22 @@ $(document).ready(function () {
 
   var localVideoTracks;
 
-  // Video.createLocalTracks().then((localTracks) => {
-  //   localVideoTracks = localTracks;
+  Video.createLocalTracks().then((localTracks) => {
+    localVideoTracks = localTracks;
 
-  //   // var localVideoTrack = localTracks.find((track) => track.kind === "video");
-  //   // const container = document.getElementById("local-video");
-  //   // container.appendChild(localVideoTrack.attach());
-  //   // localVideo.style = "display: none";
-  //   // localVideo1.hide();
-  //   // localAvatar.show();
-  // });
+    // var localVideoTrack = localTracks.find((track) => track.kind === "video");
+    // const container = document.getElementById("local-video");
+    // container.appendChild(localVideoTrack.attach());
+    // localVideo.style = "display: none";
+    // localVideo1.hide();
+    // localAvatar.show();
+  });
 
   var connectOptions = {
     preferredVideoCodecs: ["VP8"],
     name: "video call",
     // preferredAudioCodecs: ["OPUS"],
-    //tracks: localVideoTracks,
+    tracks: localVideoTracks,
     //audio: { name: "microphone" },
     //video: { name: "camera" },
     // networkQuality: {
