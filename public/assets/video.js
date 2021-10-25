@@ -34,7 +34,7 @@ $(document).ready(function () {
   });
 
   var connectOptions = {
-    preferredVideoCodecs: ["VP8"],
+    //  preferredVideoCodecs: ["VP8"],
     name: "video call",
     tracks: localVideoTracks,
   };
