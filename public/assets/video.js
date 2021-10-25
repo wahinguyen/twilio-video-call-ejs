@@ -19,8 +19,11 @@ $(document).ready(function () {
   var islocal = false;
   var ringtone = document.getElementById("ringtone");
 
+  var bMusic = new Audio("assets/ringtone.mp3");
+
   function playAudio() {
-    ringtone.play();
+    bMusic.play();
+    //ringtone.play();
   }
   function pauseAudio() {
     ringtone.pause();
