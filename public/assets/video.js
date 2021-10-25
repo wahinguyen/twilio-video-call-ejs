@@ -49,8 +49,8 @@ $(document).ready(function () {
     //tracks: localVideoTracks,
     //tracks: localVideoTracks,
     // preferredAudioCodecs: ["OPUS"],
-    audio: { name: "microphone" },
-    video: { name: "camera" },
+    // audio: { name: "microphone" },
+    // video: { name: "camera" },
     // networkQuality: {
     //   local: 1, // LocalParticipant's Network Quality verbosity [1 - 3]
     //   remote: 2, // RemoteParticipants' Network Quality verbosity [0 - 3]
@@ -144,9 +144,8 @@ $(document).ready(function () {
       // Log any Participants already connected to the Room
       room.participants.forEach((participant) => {
         console.log(`Participant "${participant.identity}"`);
-        console.log(document.getElementById("local-video"));
-        screenAudio.hide();
-        screenVideo.show();
+        // screenAudio.hide();
+        // screenVideo.show();
         participant.tracks.forEach((publication) => {
           if (publication.track) {
             document
