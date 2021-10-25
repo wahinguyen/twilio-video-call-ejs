@@ -39,10 +39,10 @@ $(document).ready(function () {
     // preferredVideoCodecs: ["H.264"],
     // preferredAudioCodecs: ["OPUS"],
     tracks: localVideoTracks,
-    networkQuality: {
-      local: 1, // LocalParticipant's Network Quality verbosity [1 - 3]
-      remote: 2, // RemoteParticipants' Network Quality verbosity [0 - 3]
-    },
+    // networkQuality: {
+    //   local: 1, // LocalParticipant's Network Quality verbosity [1 - 3]
+    //   remote: 2, // RemoteParticipants' Network Quality verbosity [0 - 3]
+    // },
   };
 
   Video.connect(token, connectOptions).then(
@@ -175,6 +175,14 @@ $(document).ready(function () {
           attachedElements.forEach((element) => element.remove());
         });
         room.disconnect();
+      });
+      Video.createLocalTracks().then((localTracks) => {
+        localTracks.forEach((track) => {
+          localVideo.appendChild(track.attach());
+        });
+        // localVideo.style = "display: none";
+        // localVideo1.hide();
+        // localAvatar.show();
       });
     },
     (error) => {
