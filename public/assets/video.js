@@ -27,6 +27,16 @@ $(document).ready(function () {
     //  video: { frameRate: 35 },
   };
 
+  Twilio.Video.createLocalTracks().then((localTracks) => {
+    localTracks.forEach((track) => {
+      if (track.kind == "video") {
+        localVideo.appendChild(track.attach());
+      }
+    });
+    localVideo1.hide();
+    localAvatar.show();
+  });
+
   Twilio.Video.connect(token, connectOptions).then(
     (room) => {
       console.log(`Room connected: "${room}"`);
@@ -158,14 +168,4 @@ $(document).ready(function () {
       console.error(`Unable to connect to Room: ${error.message}`);
     }
   );
-
-  Twilio.Video.createLocalTracks().then((localTracks) => {
-    localTracks.forEach((track) => {
-      if (track.kind == "video") {
-        localVideo.appendChild(track.attach());
-      }
-    });
-    localVideo1.hide();
-    localAvatar.show();
-  });
 });
