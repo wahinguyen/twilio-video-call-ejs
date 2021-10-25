@@ -19,14 +19,13 @@ $(document).ready(function () {
   var islocal = false;
   var ringtone = document.getElementById("ringtone");
 
-  var bMusic = new Audio("assets/HotlineBlingRingtone-DJ.mp3");
-
   function playAudio() {
+    const bMusic = new Audio("assets/HotlineBlingRingtone-DJ.mp3");
     bMusic.play();
     //ringtone.play();
   }
   function pauseAudio() {
-    ringtone.pause();
+    bMusic.pause();
   }
   //Twilio.Video.createLocalTracks().then(function (localTracks) {
   //localVideoTracks = localTracks;
