@@ -144,6 +144,7 @@ $(document).ready(function () {
       // Log any Participants already connected to the Room
       room.participants.forEach((participant) => {
         console.log(`Participant "${participant.identity}"`);
+        console.log(document.getElementById("local-video"));
         screenAudio.hide();
         screenVideo.show();
         participant.tracks.forEach((publication) => {
