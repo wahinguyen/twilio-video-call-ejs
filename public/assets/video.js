@@ -34,17 +34,19 @@ $(document).ready(function () {
     name: "video call",
     // preferredVideoCodecs: ["H.264"],
     // preferredAudioCodecs: ["OPUS"],
-    tracks: Video.createLocalTracks().then((localTracks) => localTracks),
+    // tracks: Video.createLocalTracks().then((localTracks) => localTracks),
+    audio: { name: "microphone" },
+    video: { name: "camera" },
     networkQuality: {
       local: 1, // LocalParticipant's Network Quality verbosity [1 - 3]
       remote: 2, // RemoteParticipants' Network Quality verbosity [0 - 3]
     },
   };
 
-  async function createLocalVideo(lvt) {
-    var localVideoTrack = lvt.find((track) => track.kind === "video");
-    await localVideo.appendChild(localVideoTrack.attach());
-  }
+  // async function createLocalVideo(lvt) {
+  //   var localVideoTrack = lvt.find((track) => track.kind === "video");
+  //   await localVideo.appendChild(localVideoTrack.attach());
+  // }
 
   Video.connect(token, connectOptions).then(
     (room) => {
