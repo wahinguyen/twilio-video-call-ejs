@@ -23,8 +23,11 @@ $(document).ready(function () {
   var localVideoTracks;
   Twilio.Video.createLocalTracks().then((localTracks) => {
     localVideoTracks = localTracks;
-    var localVideoTrack = localTracks.find((track) => track.kind === "video");
-    localVideo.appendChild(localVideoTrack.attach());
+    //var localVideoTrack = localTracks.find((track) => track.kind === "video");
+    localTracks.forEach((track) => {
+      localVideo.appendChild(track.attach());
+    });
+    //localVideo.appendChild(localVideoTrack.attach());
     // localVideo.style = "display: none";
     // localVideo1.hide();
     // localAvatar.show();
