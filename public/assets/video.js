@@ -22,8 +22,8 @@ $(document).ready(function () {
   var bMusic = new Audio("assets/ringtone.mp3");
 
   function playAudio() {
-    bMusic.play();
-    //ringtone.play();
+    //bMusic.play();
+    ringtone.play();
   }
   function pauseAudio() {
     ringtone.pause();
@@ -54,6 +54,8 @@ $(document).ready(function () {
   if (!Twilio.Video.isSupported) {
     alert("this browser not supported");
   }
+  playAudio();
+
   Twilio.Video.connect(token, connectOptions).then(
     (room) => {
       console.log(`Room connected:`, room);
@@ -74,7 +76,6 @@ $(document).ready(function () {
         });
       });
       //#endregion
-      playAudio();
 
       //#region handle media
       btnMedia.click(function () {
