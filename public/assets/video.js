@@ -49,7 +49,7 @@ $(document).ready(function () {
     // },
   };
 
-  Twilio.Video.connect(token, connectOptions).then(
+  Twilio.Video.connect(token, { name: "HotLine1" }).then(
     (room) => {
       console.log(`Room connected: "${room}"`);
       //#region handle microphone
