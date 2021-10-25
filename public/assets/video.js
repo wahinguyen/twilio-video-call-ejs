@@ -35,21 +35,13 @@ $(document).ready(function () {
   //   // localAvatar.show();
   // });
 
-  Video.createLocalTracks().then(function (localTracks) {
-    localVideoTracks = localTracks;
-
-    var localVideoTrack = localTracks.find((track) => track.kind === "video");
-    const container = document.getElementById("local-video");
-    container.appendChild(localVideoTrack.attach());
-  });
-
   var connectOptions = {
     preferredVideoCodecs: ["VP8"],
     name: "video call",
-    tracks: localVideoTracks,
+    //tracks: localVideoTracks,
     // preferredAudioCodecs: ["OPUS"],
-    //audio: { name: "microphone" },
-    //video: { name: "camera" },
+    audio: { name: "microphone" },
+    video: { name: "camera" },
     // networkQuality: {
     //   local: 1, // LocalParticipant's Network Quality verbosity [1 - 3]
     //   remote: 2, // RemoteParticipants' Network Quality verbosity [0 - 3]
@@ -192,6 +184,14 @@ $(document).ready(function () {
     },
     (error) => {
       console.error(`Unable to connect to Room: ${error.message}`);
-    }
+    },
+
+    Video.createLocalTracks().then(function (localTracks) {
+      localVideoTracks = localTracks;
+
+      var localVideoTrack = localTracks.find((track) => track.kind === "video");
+      const container = document.getElementById("local-video");
+      container.appendChild(localVideoTrack.attach());
+    })
   );
 });
