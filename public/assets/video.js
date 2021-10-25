@@ -29,6 +29,7 @@ $(document).ready(function () {
     const container = document.getElementById("local-video");
     container.innerHTML = "";
     container.appendChild(localVideoTrack.attach());
+    console.log(container);
     // localVideo.style = "display: none";
     // localVideo1.hide();
     // localAvatar.show();
