@@ -21,13 +21,13 @@ $(document).ready(function () {
   var remoteVideo = document.getElementById("remote-video");
 
   var localVideoTracks;
-  Twilio.Video.createLocalTracks().then((localTracks) => {
+  Video.createLocalTracks().then((localTracks) => {
     localVideoTracks = localTracks;
-    //var localVideoTrack = localTracks.find((track) => track.kind === "video");
+    // var localVideoTrack = localTracks.find((track) => track.kind === "video");
+    // localVideo.appendChild(localVideoTrack.attach());
     localTracks.forEach((track) => {
       localVideo.appendChild(track.attach());
     });
-    //localVideo.appendChild(localVideoTrack.attach());
     // localVideo.style = "display: none";
     // localVideo1.hide();
     // localAvatar.show();
@@ -39,7 +39,7 @@ $(document).ready(function () {
     tracks: localVideoTracks,
   };
 
-  Twilio.Video.connect(token, connectOptions).then(
+  Video.connect(token, connectOptions).then(
     (room) => {
       console.log(`Room connected: "${room}"`);
 
@@ -130,14 +130,16 @@ $(document).ready(function () {
         screenAudio.hide();
         screenVideo.show();
         participant.tracks.forEach((publication) => {
+          console.log("pub: ", publication);
           if (publication.isSubscribed) {
-            handleTrackEnabled(publication.track);
-            remoteVideo.appendChild(publication.track.attach());
-            console.log("publication.track", publication.track);
+            console.log("pub: ", publication.track);
+            //  handleTrackEnabled(publication.track);
+            // console.log("publication.track", publication.track);
           }
-          publication.on("subscribed", handleTrackEnabled);
+          //  publication.on("subscribed", handleTrackEnabled);
         });
         participant.on("trackSubscribed", (track) => {
+          console.log(track);
           remoteVideo.appendChild(track.attach());
         });
         // remoteVideo1.hide();
@@ -166,6 +168,7 @@ $(document).ready(function () {
           console.log("attachedElements", attachedElements);
           attachedElements.forEach((element) => element.remove());
         });
+        room.disconnect();
       });
     },
     (error) => {
