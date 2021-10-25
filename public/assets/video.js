@@ -189,16 +189,18 @@ $(document).ready(function () {
         });
         room.disconnect();
       });
+
+      Twilio.Video.createLocalTracks().then(function (localTracks) {
+        var localVideoTrack = localTracks.find(
+          (track) => track.kind === "video"
+        );
+        const container = document.getElementById("local-video");
+        container.appendChild(localVideoTrack.attach());
+        console.log(container);
+      });
     },
     (error) => {
       console.error(`Unable to connect to Room: ${error.message}`);
     }
   );
-});
-
-Twilio.Video.createLocalTracks().then(function (localTracks) {
-  var localVideoTrack = localTracks.find((track) => track.kind === "video");
-  const container = document.getElementById("local-video");
-  container.appendChild(localVideoTrack.attach());
-  console.log(container);
 });
