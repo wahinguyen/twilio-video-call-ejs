@@ -35,8 +35,8 @@ $(document).ready(function () {
     // preferredVideoCodecs: ["H.264"],
     // preferredAudioCodecs: ["OPUS"],
     tracks: localVideoTracks,
-    // audio: { name: "microphone" },
-    // video: { name: "camera" },
+    //audio: { name: "microphone" },
+    video: { name: "camera" },
     networkQuality: {
       local: 1, // LocalParticipant's Network Quality verbosity [1 - 3]
       remote: 2, // RemoteParticipants' Network Quality verbosity [0 - 3]
