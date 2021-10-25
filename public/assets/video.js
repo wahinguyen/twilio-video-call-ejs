@@ -8,14 +8,14 @@ $(document).ready(function () {
   const btnUnMedia = $("#unmedia");
   const btnHangUp = $("#hangup");
 
-  const remoteAvatar = $("#remote-avatar");
-  const localAvatar = $("#local-avatar");
+  // const remoteAvatar = $("#remote-avatar");
+  // const localAvatar = $("#local-avatar");
 
   const screenAudio = $(".container-voice");
   const screenVideo = $(".container-video");
 
-  var localVideo1 = $("#local-video");
-  var remoteVideo1 = $("#remote-video");
+  // var localVideo1 = $("#local-video");
+  // var remoteVideo1 = $("#remote-video");
 
   var localVideo = document.getElementById("local-video");
   var remoteVideo = document.getElementById("remote-video");
@@ -23,19 +23,16 @@ $(document).ready(function () {
   var localVideoTracks;
   Twilio.Video.createLocalTracks().then((localTracks) => {
     localVideoTracks = localTracks;
-    localTracks.forEach((track) => {
-      if (track.kind == "video") {
-        localVideo.appendChild(track.attach());
-      }
-    });
-    localVideo1.hide();
-    localAvatar.show();
+    var localVideoTrack = localTracks.find((track) => track.kind === "video");
+    localVideo.appendChild(localVideoTrack.attach());
+    // localVideo.style = "display: none";
+    // localVideo1.hide();
+    // localAvatar.show();
   });
 
   var connectOptions = {
-    //preferredAudioCodecs: ["OPUS"],
     preferredVideoCodecs: ["VP8"],
-    audio: true,
+    name: "video call",
     tracks: localVideoTracks,
   };
 
@@ -67,8 +64,8 @@ $(document).ready(function () {
         btnUnMedia.show();
         room.localParticipant.videoTracks.forEach((publication) => {
           publication.track.disable();
-          localVideo1.hide();
-          localAvatar.show();
+          // localVideo1.hide();
+          // localAvatar.show();
         });
       });
 
@@ -77,27 +74,27 @@ $(document).ready(function () {
         btnUnMedia.hide();
         room.localParticipant.videoTracks.forEach((publication) => {
           publication.track.enable();
-          localVideo1.show();
-          localAvatar.hide();
+          // localVideo1.show();
+          // localAvatar.hide();
         });
       });
       //#endregion
 
       function handleTrackEnabled(track) {
         track.on("enabled", () => {
-          if (track.kind == "video") {
-            remoteVideo1.show();
-            remoteAvatar.hide();
-          }
+          //  if (track.kind == "video") {
+          // remoteVideo1.show();
+          // remoteAvatar.hide();
+          //  }
         });
       }
 
       function handleTrackDisabled(track) {
         track.on("disabled", () => {
-          if (track.kind == "video") {
-            remoteVideo1.hide();
-            remoteAvatar.show();
-          }
+          //  if (track.kind == "video") {
+          // remoteVideo1.hide();
+          // remoteAvatar.show();
+          //  }
         });
       }
 
@@ -110,18 +107,18 @@ $(document).ready(function () {
           if (publication.track) {
             remoteVideo.appendChild(publication.track.attach());
           }
-          if (publication.isSubscribed) {
-            handleTrackDisabled(publication.track);
-            handleTrackEnabled(publication.track);
-          }
-          publication.on("subscribed", handleTrackDisabled);
-          publication.on("subscribed", handleTrackEnabled);
+          // if (publication.isSubscribed) {
+          //   handleTrackDisabled(publication.track);
+          //   handleTrackEnabled(publication.track);
+          // }
+          //  publication.on("subscribed", handleTrackDisabled);
+          //  publication.on("subscribed", handleTrackEnabled);
         });
         participant.on("trackSubscribed", (track) => {
           remoteVideo.appendChild(track.attach());
         });
-        remoteAvatar.show();
-        remoteVideo1.hide();
+        // remoteAvatar.show();
+        // remoteVideo1.hide();
       });
       // Log new Participants as they connect to the Room
       room.on("participantConnected", (participant) => {
@@ -130,16 +127,17 @@ $(document).ready(function () {
         screenVideo.show();
         participant.tracks.forEach((publication) => {
           if (publication.isSubscribed) {
-            handleTrackEnabled(publication.track);
+            //  handleTrackEnabled(publication.track);
+            remoteVideo.appendChild(publication.track.attach());
             console.log("publication.track", publication.track);
           }
-          publication.on("subscribed", handleTrackEnabled);
+          //  publication.on("subscribed", handleTrackEnabled);
         });
         participant.on("trackSubscribed", (track) => {
           remoteVideo.appendChild(track.attach());
         });
-        remoteVideo1.hide();
-        remoteAvatar.show();
+        // remoteVideo1.hide();
+        // remoteAvatar.show();
       });
 
       room.on("participantDisconnected", (participant) => {
