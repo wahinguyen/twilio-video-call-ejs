@@ -42,9 +42,9 @@ $(document).ready(function () {
   //   container.appendChild(localVideoTrack.attach());
   //   return;
   // });
-  var localVideoTracks;
+  const localVideoTracks;
   Video.createLocalTracks().then((localTracks) => {
-    this.localVideoTracks = localTracks;
+    localVideoTracks = localTracks;
     var localVideoTrack = localTracks.find((track) => track.kind === "video");
     const container = document.getElementById("local-video");
     container.appendChild(localVideoTrack.attach());
@@ -52,7 +52,7 @@ $(document).ready(function () {
   var connectOptions = {
     preferredVideoCodecs: ["VP8"],
     name: "video call",
-    tracks: this.localVideoTracks,
+    tracks: localVideoTracks,
     // preferredAudioCodecs: ["OPUS"],
     // video: { frames: 25 },
     // audio: true,
