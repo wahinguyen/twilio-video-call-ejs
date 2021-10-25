@@ -33,7 +33,7 @@ $(document).ready(function () {
   });
 
   var connectOptions = {
-    preferredAudioCodecs: ["OPUS"],
+    //preferredAudioCodecs: ["OPUS"],
     preferredVideoCodecs: ["VP8"],
     audio: true,
     tracks: localVideoTracks,
