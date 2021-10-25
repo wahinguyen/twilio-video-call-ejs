@@ -34,16 +34,6 @@ $(document).ready(function () {
   //   // localAvatar.show();
   // });
   var localVideoTracks;
-
-  Twilio.Video.createLocalTracks().then(function (localTracks) {
-    localVideoTracks = localTracks;
-    var localVideoTrack = localVideoTracks.find(
-      (track) => track.kind === "video"
-    );
-    const container = document.getElementById("local-video");
-    container.appendChild(localVideoTrack.attach());
-  });
-
   var connectOptions = {
     //preferredVideoCodecs: ["VP8"],
     name: "video call",
