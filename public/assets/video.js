@@ -61,12 +61,12 @@ $(document).ready(function () {
   Twilio.Video.connect(token, connectOptions).then(
     (room) => {
       console.log(`Room connected: "${room}"`);
-      Twilio.Video.createLocalTracks().then((localTracks) => {
-        var localVideoTrack = localTracks.find(
-          (track) => track.kind === "video"
-        );
+      Twilio.Video.createLocalVideoTrack().then((localTracks) => {
+        // var localVideoTrack = localTracks.find(
+        //   (track) => track.kind === "video"
+        // );
         const container = document.getElementById("local-video");
-        container.appendChild(localVideoTrack.attach());
+        container.appendChild(localTracks.attach());
       });
       //#region handle microphone
       btnMute.click(function () {
