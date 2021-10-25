@@ -21,23 +21,20 @@ $(document).ready(function () {
   const bMusic = new Audio("assets/HotlineBlingRingtone-DJ.mp3");
 
   function playAudio() {
-    bMusic.play();
+    const soundEffect = new Audio();
+    soundEffect.autoplay = true;
+    // onClick of first interaction on page before I need the sounds
+    // (This is a tiny MP3 file that is silent and extremely short - retrieved from https://bigsoundbank.com and then modified)
+    soundEffect.src =
+      "data:audio/mpeg;base64,SUQzBAAAAAABEVRYWFgAAAAtAAADY29tbWVudABCaWdTb3VuZEJhbmsuY29tIC8gTGFTb25vdGhlcXVlLm9yZwBURU5DAAAAHQAAA1N3aXRjaCBQbHVzIMKpIE5DSCBTb2Z0d2FyZQBUSVQyAAAABgAAAzIyMzUAVFNTRQAAAA8AAANMYXZmNTcuODMuMTAwAAAAAAAAAAAAAAD/80DEAAAAA0gAAAAATEFNRTMuMTAwVVVVVVVVVVVVVUxBTUUzLjEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQsRbAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQMSkAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV";
+    // later on when you actually want to play a sound at any point without user interaction
+    soundEffect.src = "assets/HotlineBlingRingtone-DJ.mp3";
+    //bMusic.play();
     //ringtone.play();
   }
   function pauseAudio() {
     bMusic.pause();
   }
-  //Twilio.Video.createLocalTracks().then(function (localTracks) {
-  //localVideoTracks = localTracks;
-  //var localVideoTrack = localTracks.find((track) => track.kind === "video");
-  //const container = document.getElementById("local-video");
-  // container.innerHTML = "";
-  // container.appendChild(localVideoTrack.attach());
-  // console.log(container);
-  // localVideo.style = "display: none";
-  // localVideo1.hide();
-  // localAvatar.show();
-  //  });
 
   var connectOptions = {
     preferredVideoCodecs: ["VP8"],
