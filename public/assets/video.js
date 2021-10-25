@@ -53,11 +53,6 @@ $(document).ready(function () {
 
   Video.connect(token, connectOptions).then(
     (room) => {
-      var lct;
-
-      Video.createLocalTracks().then((localTracks) => {
-        lct = localTracks;
-      });
       console.log(`Room connected: "${room}"`);
       //#region handle microphone
       btnMute.click(function () {
