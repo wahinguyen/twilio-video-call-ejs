@@ -24,29 +24,29 @@ $(document).ready(function () {
 
   Video.createLocalTracks().then((localTracks) => {
     localVideoTracks = localTracks;
-    // var localVideoTrack = localTracks.find(
-    //   (track) => track.kind === "video"
-    // );
+    const container = document.getElementById("local-video");
+    localTracks.forEach((track) => {
+      container.appendChild(track.attach());
+    });
+    // var localVideoTrack = localTracks.find((track) => track.kind === "video");
     // const container = document.getElementById("local-video");
-    // localTracks.forEach((track) => {
-    //   container.appendChild(localVideoTrack.attach());
-    // });
+    // container.appendChild(localVideoTrack.attach());
     // localVideo.style = "display: none";
     // localVideo1.hide();
     // localAvatar.show();
   });
 
   var connectOptions = {
+    preferredVideoCodecs: ["VP8"],
     name: "video call",
-    // preferredVideoCodecs: ["H.264"],
     // preferredAudioCodecs: ["OPUS"],
     tracks: localVideoTracks,
     //audio: { name: "microphone" },
     //video: { name: "camera" },
-    networkQuality: {
-      local: 1, // LocalParticipant's Network Quality verbosity [1 - 3]
-      remote: 2, // RemoteParticipants' Network Quality verbosity [0 - 3]
-    },
+    // networkQuality: {
+    //   local: 1, // LocalParticipant's Network Quality verbosity [1 - 3]
+    //   remote: 2, // RemoteParticipants' Network Quality verbosity [0 - 3]
+    // },
   };
 
   // async function createLocalVideo(lvt) {
@@ -183,17 +183,6 @@ $(document).ready(function () {
           attachedElements.forEach((element) => element.remove());
         });
         room.disconnect();
-      });
-
-      Video.createLocalTracks().then((localTracks) => {
-        var localVideoTrack = localTracks.find(
-          (track) => track.kind === "video"
-        );
-        const container = document.getElementById("local-video");
-        container.appendChild(localVideoTrack.attach());
-        // localVideo.style = "display: none";
-        // localVideo1.hide();
-        // localAvatar.show();
       });
     },
     (error) => {
