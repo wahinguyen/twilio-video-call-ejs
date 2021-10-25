@@ -168,14 +168,14 @@ $(document).ready(function () {
 
       Video.createLocalTracks().then((localTracks) => {
         // localVideoTracks = localTracks;
-        // var localVideoTrack = localTracks.find(
-        //   (track) => track.kind === "video"
-        // );
-        // const container = document.getElementById("local-video");
-        // container.appendChild(localVideoTrack.attach());
-        localTracks.forEach((track) => {
-          localVideo.appendChild(track.attach());
-        });
+        var localVideoTrack = localTracks.find(
+          (track) => track.kind === "video"
+        );
+        const container = document.getElementById("local-video");
+        container.appendChild(localVideoTrack.attach());
+        // localTracks.forEach((track) => {
+        //   localVideo.appendChild(track.attach());
+        // });
         // localVideo.style = "display: none";
         // localVideo1.hide();
         // localAvatar.show();
