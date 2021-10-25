@@ -20,11 +20,17 @@ $(document).ready(function () {
   var localVideo = document.getElementById("local-video");
   var remoteVideo = document.getElementById("remote-video");
 
-  // var localVideoTracks;
+  var localVideoTracks;
 
   Video.createLocalTracks().then((localTracks) => {
     localVideoTracks = localTracks;
-
+    // var localVideoTrack = localTracks.find(
+    //   (track) => track.kind === "video"
+    // );
+    // const container = document.getElementById("local-video");
+    // localTracks.forEach((track) => {
+    //   container.appendChild(localVideoTrack.attach());
+    // });
     // localVideo.style = "display: none";
     // localVideo1.hide();
     // localAvatar.show();
