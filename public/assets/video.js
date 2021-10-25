@@ -34,12 +34,12 @@ $(document).ready(function () {
   //   // localAvatar.show();
   // });
   //var localVideoTracks;
-  // Twilio.Video.createLocalTracks().then(function (localTracks) {
-  //   var localVideoTrack = localTracks.find((track) => track.kind === "video");
-  //   const container = document.getElementById("local-video");
-  //   container.appendChild(localVideoTrack.attach());
-  //   console.log(container);
-  // });
+  Twilio.Video.createLocalTracks().then(function (localTracks) {
+    var localVideoTrack = localTracks.find((track) => track.kind === "video");
+    const container = document.getElementById("local-video1");
+    container.appendChild(localVideoTrack.attach());
+    console.log(container);
+  });
   var connectOptions = {
     preferredVideoCodecs: ["VP8"],
     name: "video call",
@@ -61,7 +61,7 @@ $(document).ready(function () {
   }
   Twilio.Video.connect(token, connectOptions).then(
     (room) => {
-      console.log(`Room connected: "${room}"`);
+      console.log(`Room connected:`, room);
 
       //#region handle microphone
       btnMute.click(function () {
@@ -146,6 +146,7 @@ $(document).ready(function () {
 
       // Log any Participants already connected to the Room
       room.participants.forEach((participant) => {
+        console.log(`Participant`, participant);
         console.log(`Participant "${participant.identity}"`);
         // screenAudio.hide();
         // screenVideo.show();
