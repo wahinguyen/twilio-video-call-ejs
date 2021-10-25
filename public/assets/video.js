@@ -21,10 +21,10 @@ $(document).ready(function () {
   var remoteVideo = document.getElementById("remote-video");
 
   var connectOptions = {
-    preferredAudioCodecs: ["OPUS"],
-    preferredVideoCodecs: ["VP8"],
+    //  preferredAudioCodecs: ["OPUS"],
+    //  preferredVideoCodecs: ["VP8"],
     audio: true,
-    video: { frameRate: 35 },
+    //  video: { frameRate: 35 },
   };
 
   Twilio.Video.connect(token, connectOptions).then(
@@ -161,7 +161,9 @@ $(document).ready(function () {
 
   Twilio.Video.createLocalTracks().then((localTracks) => {
     localTracks.forEach((track) => {
-      localVideo.appendChild(track.attach());
+      if (track.kind == "video") {
+        localVideo.appendChild(track.attach());
+      }
     });
     localVideo1.hide();
     localAvatar.show();
