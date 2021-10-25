@@ -188,7 +188,7 @@ $(document).ready(function () {
       });
 
       const container = document.getElementById("local-video");
-      var localVideoTrack = lvt.find((track) => track.kind === "video");
+      var localVideoTrack = lct.find((track) => track.kind === "video");
       container.appendChild(localVideoTrack.attach());
     },
     (error) => {
