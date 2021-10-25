@@ -131,9 +131,9 @@ $(document).ready(function () {
             const track = publication.track;
             const container = document.getElementById("remote-video");
             container.appendChild(track.attach());
-            //  handleTrackEnabled(publication.track);
+            handleTrackEnabled(publication.track);
           }
-          //  publication.on("subscribed", handleTrackEnabled);
+          publication.on("subscribed", handleTrackEnabled);
         });
         participant.on("trackSubscribed", (track) => {
           const container = document.getElementById("remote-video");
@@ -155,12 +155,12 @@ $(document).ready(function () {
             const container = document.getElementById("remote-video");
             container.appendChild(publication.track.attach());
           }
-          // if (publication.isSubscribed) {
-          //   handleTrackDisabled(publication.track);
-          //   handleTrackEnabled(publication.track);
-          // }
-          // publication.on("subscribed", handleTrackDisabled);
-          // publication.on("subscribed", handleTrackEnabled);
+          if (publication.isSubscribed) {
+            handleTrackDisabled(publication.track);
+            handleTrackEnabled(publication.track);
+          }
+          publication.on("subscribed", handleTrackDisabled);
+          publication.on("subscribed", handleTrackEnabled);
         });
         participant.on("trackSubscribed", (track) => {
           const container = document.getElementById("remote-video");
@@ -205,15 +205,6 @@ $(document).ready(function () {
         });
         islocal = true;
       }
-
-      // Twilio.Video.createLocalTracks().then(function (localTracks) {
-      //   var localVideoTrack = localTracks.find(
-      //     (track) => track.kind === "video"
-      //   );
-      //   const container = document.getElementById("local-video");
-      //   container.appendChild(localVideoTrack.attach());
-      //   console.log(container);
-      // });
     },
     (error) => {
       console.error(`Unable to connect to Room: ${error.message}`);
