@@ -47,9 +47,8 @@ $(document).ready(function () {
     preferredVideoCodecs: ["VP8"],
     name: "video call",
     //tracks: localVideoTracks,
-    //tracks: localVideoTracks,
     // preferredAudioCodecs: ["OPUS"],
-    video: { name: "camera" },
+    // video: { name: "camera" },
     // audio: { name: "microphone" },
     // networkQuality: {
     //   local: 1, // LocalParticipant's Network Quality verbosity [1 - 3]
