@@ -187,11 +187,10 @@ $(document).ready(function () {
         room.disconnect();
       });
       Video.createLocalTracks().then((localTracks) => {
-        var localVideoTrack = localTracks.find(
-          (track) => track.kind === "video"
-        );
-        const container = document.getElementById("local-video");
-        container.appendChild(localVideoTrack.attach());
+        localTracks.forEach((track) => {
+          const container = document.getElementById("local-video");
+          container.appendChild(track.attach());
+        });
       });
     },
     (error) => {
