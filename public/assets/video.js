@@ -20,25 +20,25 @@ $(document).ready(function () {
   var localVideo = document.getElementById("local-video");
   var remoteVideo = document.getElementById("remote-video");
 
-  var localVideoTracks;
+  // var localVideoTracks;
 
-  Video.createLocalTracks().then((localTracks) => {
-    localVideoTracks = localTracks;
+  // Video.createLocalTracks().then((localTracks) => {
+  //   localVideoTracks = localTracks;
 
-    // localVideo.style = "display: none";
-    // localVideo1.hide();
-    // localAvatar.show();
-  });
+  //   // localVideo.style = "display: none";
+  //   // localVideo1.hide();
+  //   // localAvatar.show();
+  // });
 
   var connectOptions = {
     name: "video call",
     // preferredVideoCodecs: ["H.264"],
     // preferredAudioCodecs: ["OPUS"],
-    tracks: localVideoTracks,
-    // networkQuality: {
-    //   local: 1, // LocalParticipant's Network Quality verbosity [1 - 3]
-    //   remote: 2, // RemoteParticipants' Network Quality verbosity [0 - 3]
-    // },
+    tracks: Video.createLocalTracks().then((localTracks) => localTracks),
+    networkQuality: {
+      local: 1, // LocalParticipant's Network Quality verbosity [1 - 3]
+      remote: 2, // RemoteParticipants' Network Quality verbosity [0 - 3]
+    },
   };
 
   async function createLocalVideo(lvt) {
@@ -49,7 +49,6 @@ $(document).ready(function () {
   Video.connect(token, connectOptions).then(
     (room) => {
       console.log(`Room connected: "${room}"`);
-      createLocalVideo(localVideoTracks);
       //#region handle microphone
       btnMute.click(function () {
         btnMute.hide();
@@ -176,6 +175,16 @@ $(document).ready(function () {
           attachedElements.forEach((element) => element.remove());
         });
         room.disconnect();
+      });
+
+      Video.createLocalTracks().then((localTracks) => {
+        var localVideoTrack = localTracks.find(
+          (track) => track.kind === "video"
+        );
+        localVideo.appendChild(localVideoTrack.attach());
+        // localVideo.style = "display: none";
+        // localVideo1.hide();
+        // localAvatar.show();
       });
     },
     (error) => {
