@@ -35,8 +35,9 @@ $(document).ready(function () {
   });
 
   var connectOptions = {
-    //  preferredVideoCodecs: ["VP8"],
     name: "video call",
+    preferredVideoCodecs: ["H.264"],
+    preferredAudioCodecs: ["OPUS"],
     audio: { name: "microphone" },
     video: { name: "camera" },
     networkQuality: {
