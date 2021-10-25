@@ -34,14 +34,11 @@ $(document).ready(function () {
   //   // localAvatar.show();
   // });
 
-  // Video.createLocalTracks().then(function (localTracks) {
-  //   localVideoTracks = localTracks;
-
-  //   var localVideoTrack = localTracks.find((track) => track.kind === "video");
-  //   const container = document.getElementById("local-video");
-  //   container.appendChild(localVideoTrack.attach());
-  //   return;
-  // });
+  Twilio.Video.createLocalTracks().then(function (localTracks) {
+    var localVideoTrack = localTracks.find((track) => track.kind === "video");
+    const container = document.getElementById("local-video");
+    container.appendChild(localVideoTrack.attach());
+  });
 
   var connectOptions = {
     preferredVideoCodecs: ["VP8"],
@@ -135,13 +132,15 @@ $(document).ready(function () {
           if (publication.isSubscribed) {
             console.log("pub: ", publication.track);
             const track = publication.track;
-            document.getElementById("remote-video").appendChild(track.attach());
+            const container = document.getElementById("remote-video");
+            container.appendChild(track.attach());
             //  handleTrackEnabled(publication.track);
           }
           //  publication.on("subscribed", handleTrackEnabled);
         });
         participant.on("trackSubscribed", (track) => {
-          document.getElementById("remote-video").appendChild(track.attach());
+          const container = document.getElementById("remote-video");
+          container.appendChild(track.attach());
           //  remoteVideo.appendChild(track.attach());
         });
         // remoteVideo1.hide();
@@ -155,9 +154,8 @@ $(document).ready(function () {
         // screenVideo.show();
         participant.tracks.forEach((publication) => {
           if (publication.track) {
-            document
-              .getElementById("remote-video")
-              .appendChild(publication.track.attach());
+            const container = document.getElementById("remote-video");
+            container.appendChild(publication.track.attach());
           }
           // if (publication.isSubscribed) {
           //   handleTrackDisabled(publication.track);
@@ -167,7 +165,8 @@ $(document).ready(function () {
           // publication.on("subscribed", handleTrackEnabled);
         });
         participant.on("trackSubscribed", (track) => {
-          document.getElementById("remote-video").appendChild(track.attach());
+          const container = document.getElementById("remote-video");
+          container.appendChild(track.attach());
         });
         // remoteAvatar.show();
         // remoteVideo1.hide();
