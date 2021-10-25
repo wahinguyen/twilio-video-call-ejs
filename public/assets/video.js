@@ -20,7 +20,7 @@ $(document).ready(function () {
   var localVideo = document.getElementById("local-video");
   var remoteVideo = document.getElementById("remote-video");
 
-  //var localVideoTracks;
+  var localVideoTracks;
   //console.log(localVideoTracks);
   // Video.createLocalTracks().then(function (localTracks) {
   //   localVideoTracks = localTracks;
@@ -43,15 +43,14 @@ $(document).ready(function () {
   //   container.appendChild(localVideoTrack.attach());
   //   return;
   // });
-  console.log(document.getElementById("local-video"));
   var connectOptions = {
     preferredVideoCodecs: ["VP8"],
     name: "video call",
-    tracks: undefined,
+    //tracks: localVideoTracks,
     //tracks: localVideoTracks,
     // preferredAudioCodecs: ["OPUS"],
-    // audio: { name: "audio" },
-    // video: { name: "video" },
+    audio: { name: "microphone" },
+    video: { name: "camera" },
     // networkQuality: {
     //   local: 1, // LocalParticipant's Network Quality verbosity [1 - 3]
     //   remote: 2, // RemoteParticipants' Network Quality verbosity [0 - 3]
