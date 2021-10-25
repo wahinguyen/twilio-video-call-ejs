@@ -14,12 +14,17 @@ $(document).ready(function () {
   const screenAudio = $(".container-voice");
   const screenVideo = $(".container-video");
 
-  var localVideo1 = $("#local-video");
-  // var remoteVideo1 = $("#remote-video");
-
   var localVideo = document.getElementById("local-video");
   var remoteVideo = document.getElementById("remote-video");
   var islocal = false;
+  var ringtone = document.getElementById("ringtone");
+
+  function playAudio() {
+    ringtone.play();
+  }
+  function pauseAudio() {
+    ringtone.pause();
+  }
   //Twilio.Video.createLocalTracks().then(function (localTracks) {
   //localVideoTracks = localTracks;
   //var localVideoTrack = localTracks.find((track) => track.kind === "video");
@@ -66,6 +71,7 @@ $(document).ready(function () {
         });
       });
       //#endregion
+      playAudio();
 
       //#region handle media
       btnMedia.click(function () {
@@ -109,6 +115,7 @@ $(document).ready(function () {
       // Log new Participants as they connect to the Room
       room.on("participantConnected", (participant) => {
         console.log(`A remote Participant connected: ${participant.identity}`);
+        pauseAudio();
         screenAudio.hide();
         screenVideo.show();
         participant.tracks.forEach((publication) => {
