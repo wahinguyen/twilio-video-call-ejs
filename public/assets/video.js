@@ -19,11 +19,11 @@ $(document).ready(function () {
   var islocal = false;
   var ringtone = document.getElementById("ringtone");
 
-  var bMusic = new Audio("assets/ringtone.mp3");
+  var bMusic = new Audio("assets/HotlineBlingRingtone-DJ.mp3");
 
   function playAudio() {
-    //bMusic.play();
-    ringtone.play();
+    bMusic.play();
+    //ringtone.play();
   }
   function pauseAudio() {
     ringtone.pause();
@@ -54,10 +54,10 @@ $(document).ready(function () {
   if (!Twilio.Video.isSupported) {
     alert("this browser not supported");
   }
-  playAudio();
 
   Twilio.Video.connect(token, connectOptions).then(
     (room) => {
+      playAudio();
       console.log(`Room connected:`, room);
       //#region handle microphone
       btnMute.click(function () {
