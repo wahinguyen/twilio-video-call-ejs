@@ -18,9 +18,9 @@ $(document).ready(function () {
   var remoteVideo = document.getElementById("remote-video");
   var islocal = false;
   var ringtone = document.getElementById("ringtone");
+  const bMusic = new Audio("assets/HotlineBlingRingtone-DJ.mp3");
 
   function playAudio() {
-    const bMusic = new Audio("assets/HotlineBlingRingtone-DJ.mp3");
     bMusic.play();
     //ringtone.play();
   }
