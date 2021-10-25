@@ -48,8 +48,8 @@ $(document).ready(function () {
     name: "video call",
     //tracks: localVideoTracks,
     // preferredAudioCodecs: ["OPUS"],
-    video: { frames: 25 },
-    audio: true,
+    // video: { frames: 25 },
+    // audio: true,
     // video: { name: "camera" },
     // audio: { name: "microphone" },
     // networkQuality: {
@@ -61,6 +61,11 @@ $(document).ready(function () {
   Video.connect(token, connectOptions).then(
     (room) => {
       console.log(`Room connected: "${room}"`);
+      Video.createLocalVideoTrack().then((localTracks) => {
+        // var localVideoTrack = localTracks.find((track) => track.kind === "video");
+        const container = document.getElementById("local-video");
+        container.appendChild(localTracks.attach());
+      });
 
       //#region handle microphone
       btnMute.click(function () {
