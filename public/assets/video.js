@@ -42,10 +42,10 @@ $(document).ready(function () {
     name: "video call",
     video: { name: "camera" },
     audio: { name: "microphone" },
-    networkQuality: {
-      local: 1, // LocalParticipant's Network Quality verbosity [1 - 3]
-      remote: 2, // RemoteParticipants' Network Quality verbosity [0 - 3]
-    },
+    // networkQuality: {
+    //   local: 1, // LocalParticipant's Network Quality verbosity [1 - 3]
+    //   remote: 2, // RemoteParticipants' Network Quality verbosity [0 - 3]
+    // },
   };
   if (!Twilio.Video.isSupported) {
     alert("this browser not supported");
