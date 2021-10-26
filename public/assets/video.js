@@ -28,9 +28,17 @@ $(document).ready(function () {
     bMusic.pause();
   }
 
+  const showDoctorName = (doctorName) => {
+    const doctor_name = document.createElement("p");
+    doctor_name.classList.add("doctor-name");
+    doctor_name.append(document.createTextNode(`BS. ${doctorName}`));
+    const container = document.getElementById("remote-video");
+    container.append(doctor_name);
+  };
+
   var connectOptions = {
     preferredVideoCodecs: ["VP8"],
-    preferredAudioCodecs: ["OPUS"],
+    //preferredAudioCodecs: ["OPUS"],
     name: "video call",
     video: { name: "camera" },
     audio: { name: "microphone" },
@@ -107,6 +115,7 @@ $(document).ready(function () {
       room.on("participantConnected", (participant) => {
         console.log(`A remote Participant connected: ${participant.identity}`);
         pauseAudio();
+        showDoctorName(participant.identity);
         screenAudio.hide();
         screenVideo.show();
         participant.tracks.forEach((publication) => {
@@ -132,6 +141,7 @@ $(document).ready(function () {
         console.log(`Participant "${participant.identity}"`);
         screenAudio.hide();
         screenVideo.show();
+        pauseAudio();
         participant.tracks.forEach((publication) => {
           if (publication.track) {
             remoteVideo.appendChild(publication.track.attach());
@@ -172,6 +182,7 @@ $(document).ready(function () {
           console.log("attachedElements", attachedElements);
           attachedElements.forEach((element) => element.remove());
         });
+        pauseAudio();
         room.disconnect();
       });
 
@@ -179,6 +190,7 @@ $(document).ready(function () {
         room.localParticipant.tracks.forEach((publication) => {
           if (publication.track.kind === "video") {
             localVideo.appendChild(publication.track.attach());
+            publication.track.disable();
             localVideo.style = "display: none";
             localAvatar.show();
           }
